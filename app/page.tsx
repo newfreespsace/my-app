@@ -25,6 +25,8 @@ export default async function Page() {
   await dbConnect();
   const articles = await Article.find();
 
+  console.log(articles);
+
   return (
     <>
       <p>{process.env.MONGODB_URI}</p>
