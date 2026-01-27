@@ -25,14 +25,12 @@ export default async function Page() {
   await dbConnect();
   const articles = await Article.find();
 
-  console.log(articles);
-
   return (
     <>
       <p>{process.env.MONGODB_URI}</p>
       <div>
         {articles.map((a) => (
-          <p key={a.content}>{a.content}</p>
+          <p key={a._id}>{a.content}</p>
         ))}
       </div>
       <p>----------------------</p>
