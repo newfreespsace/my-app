@@ -4,6 +4,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import Article from "@/models/Article";
 import dbConnect from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export default async function Page() {
   async function createInvoice(formData: FormData) {
@@ -16,6 +17,7 @@ export default async function Page() {
     };
 
     const article = await Article.create(rawFormData);
+    revalidatePath("/");
 
     console.log(article);
   }
