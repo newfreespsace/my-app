@@ -26,10 +26,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    // ".next/types/**/*.ts",
-    // ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    "global.d.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
   ],
-  "exclude": ["node_modules", ".next"] // 确保排除 .next 目录]
+  "exclude": ["node_modules"]
 }
