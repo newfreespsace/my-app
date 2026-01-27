@@ -27,6 +27,7 @@ export default async function Page() {
 
   return (
     <>
+      <p>{process.env.MONGODB_URI}</p>
       <div>
         {articles.map((a) => (
           <p key={a.content}>{a.content}</p>
