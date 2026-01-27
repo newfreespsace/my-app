@@ -35,7 +35,7 @@ export default async function Page() {
       <ArticleListTable articles={articles} />
       <p>{process.env.MONGODB_URI}</p>
       <div>
-        {articles.map((a) => (
+        {articles.map((a: { _id: string; content: string }) => (
           <Link key={a._id} href={`articles/${a._id}`}>
             <p>{a.content}</p>
           </Link>

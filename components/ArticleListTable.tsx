@@ -10,7 +10,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function ArticleListTable({ articles }) {
+// 1. 定义单个 Article 的结构
+interface Article {
+  _id: string | number;
+  content: string;
+  // 如果还有其他字段，可以在这里继续添加，例如：
+  // title?: string;
+}
+
+// 2. 定义组件 Props 的接口
+interface ArticleListTableProps {
+  articles: Article[];
+}
+
+export default function ArticleListTable({ articles }: ArticleListTableProps) {
   return (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
