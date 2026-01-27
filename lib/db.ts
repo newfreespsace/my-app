@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
-  throw new Error("请在 .env.local 中定义 MONGODB_URI");
+  throw new Error("请在 .env.local 中定义 MONGODB_URI 环境变量");
 }
 
 /**
- * 在开发模式下，使用全局变量来缓存连接，防止热重载导致连接数暴增。
+ * 使用 global.mongoose 确保在开发环境下热重载不会导致连接数耗尽
  */
 let cached = global.mongoose;
 
