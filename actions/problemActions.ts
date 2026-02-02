@@ -25,7 +25,7 @@ export async function calculateOnServer() {
   const startTime = performance.now(); // 开始计时
 
   let sum = 0;
-  for (let i = 0; i < 10000000; i++) {
+  for (let i = 0; i < 100000000; i++) {
     sum += Math.floor(Math.random() * 11);
   }
 
