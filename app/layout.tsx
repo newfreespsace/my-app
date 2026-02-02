@@ -1,6 +1,6 @@
-import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import './globals.css';
+import { SiteHeader } from '@/components/site-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export default function RootLayout({
   children,
@@ -8,19 +8,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <body>
         <SidebarProvider
           style={
             {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
+              '--sidebar-width': 'calc(var(--spacing) * 72)',
+              '--header-height': 'calc(var(--spacing) * 12)',
             } as React.CSSProperties
           }
         >
           <SidebarInset>
             <SiteHeader />
-            <div className="ml-10">{children}</div>
+            <div className=''>{children}</div>
           </SidebarInset>
         </SidebarProvider>
       </body>
