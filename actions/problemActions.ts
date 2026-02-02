@@ -21,19 +21,30 @@ export const deleteProblem = async (id: string) => {
   }
 };
 
-export async function calculateOnServer() {
+function check(a: number) {
+  for (let i = 2; i * i <= a; i++) {
+    if (a % i == 0) return false;
+  }
+  return true;
+}
+
+export async function calculateOnServer(a: number) {
   const startTime = performance.now(); // 开始计时
 
-  let sum = 0;
-  for (let i = 0; i < 100000000; i++) {
-    sum += Math.floor(Math.random() * 11);
+  let num;
+  while (true) {
+    if (check(a) && check(a + 2)) {
+      num = a;
+      break;
+    }
+    a++;
   }
 
   const endTime = performance.now(); // 结束计时
   const duration = (endTime - startTime).toFixed(2); // 保留两位小数，单位是毫秒
 
   return {
-    sum,
+    num,
     duration: parseFloat(duration),
   };
 }

@@ -5,7 +5,8 @@ import { calculateOnServer } from '@/actions/problemActions';
 
 // 定义一条记录的类型
 interface CalcRecord {
-  sum: number;
+  num: number;
+  idx: number;
   duration: number;
   timestamp: string;
 }
@@ -13,19 +14,27 @@ interface CalcRecord {
 export default function Calculator() {
   const [history, setHistory] = useState<CalcRecord[]>([]);
   const [isPending, setIsPending] = useState(false);
+  const [lastNum, setLastNum] = useState(100000000);
 
   const handleBtnClick = async () => {
     setIsPending(true);
     try {
       // 获取服务器返回的对象 { sum, duration }
-      const result = await calculateOnServer();
+      const tot = 1000;
+      let k = 100000000000000;
+      for (let i = 1; i <= tot; i++) {
+        const result = await calculateOnServer(k);
+        setLastNum(result.num);
+        k = result.num + 2;
 
-      const newRecord: CalcRecord = {
-        ...result,
-        timestamp: new Date().toLocaleTimeString(), // 添加一个本地时间戳
-      };
+        const newRecord: CalcRecord = {
+          idx: i,
+          ...result,
+          timestamp: new Date().toLocaleTimeString(), // 添加一个本地时间戳
+        };
 
-      setHistory((prev) => [newRecord, ...prev]);
+        setHistory((prev) => [newRecord, ...prev]);
+      }
     } catch (error) {
       console.error('计算出错:', error);
     } finally {
@@ -49,8 +58,9 @@ export default function Calculator() {
           {history.map((item, index) => (
             <div key={index} className='flex items-center justify-between p-4 bg-white border rounded-lg shadow-sm'>
               <div>
+                <div className='text-sm text-gray-500'>计算编号: {item.idx}</div>
                 <div className='text-sm text-gray-500'>计算时间: {item.timestamp}</div>
-                <div className='text-lg font-mono font-bold text-gray-800'>结果: {item.sum.toLocaleString()}</div>
+                <div className='text-lg font-mono font-bold text-gray-800'>结果: {item.num.toLocaleString()}</div>
               </div>
               <div className='text-right'>
                 <span className='text-xs font-semibold px-2 py-1 bg-green-100 text-green-700 rounded-full'>耗时: {item.duration} ms</span>
