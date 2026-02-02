@@ -20,3 +20,20 @@ export const deleteProblem = async (id: string) => {
     redirect('/problems'); // ✅ 放在外面执行
   }
 };
+
+export async function calculateOnServer() {
+  const startTime = performance.now(); // 开始计时
+
+  let sum = 0;
+  for (let i = 0; i < 10000000; i++) {
+    sum += Math.floor(Math.random() * 11);
+  }
+
+  const endTime = performance.now(); // 结束计时
+  const duration = (endTime - startTime).toFixed(2); // 保留两位小数，单位是毫秒
+
+  return {
+    sum,
+    duration: parseFloat(duration),
+  };
+}
