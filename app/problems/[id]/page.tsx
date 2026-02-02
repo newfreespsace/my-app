@@ -6,10 +6,14 @@ import { Separator } from '@/components/ui/separator';
 
 import MarkdownViewer from '@/components/MarkdownViewer';
 import Link from 'next/link';
+import dbConnect from '@/lib/db';
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
+  console.log(id);
+  await dbConnect();
   const problem = await Problem.findById(id);
+  console.log(problem);
 
   return (
     <>
