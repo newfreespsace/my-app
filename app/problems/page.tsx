@@ -1,6 +1,6 @@
 import Problem from '@/models/Problem';
 import dbConnect from '@/lib/db';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import ProblemListTable from '@/components/ProblemListTable';
 
@@ -22,12 +22,12 @@ export default async function Page() {
 
   return (
     <div className='max-w-300 flex flex-col m-auto'>
-      <div className='ml-auto'>
-        <Button>
-          <Link href='/problems/add'>新增题目</Link>
-        </Button>
+      <div className='ml-auto mt-4 gap-1'>
+        <Link href='/problems/add' className={buttonVariants({})}>
+          新增题目
+        </Link>
       </div>
-      <div className='bg-card border rounded-l-xl'>
+      <div className='bg-card border rounded-l-xl mt-4'>
         <ProblemListTable problems={problems} />
       </div>
     </div>
