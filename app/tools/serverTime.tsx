@@ -27,6 +27,9 @@ export default function ServerMonitor() {
         <div className='mb-4 text-blue-400 border-b border-slate-700 pb-2'>
           <p>CPU: {serverInfo.model}</p>
           <p>Cores: {serverInfo.count}</p>
+          <p>Speed: {serverInfo.speed}</p>
+          <p>Platform: {serverInfo.platform}</p>
+          <p>Loadavg: {serverInfo.loadavg}</p>
         </div>
       )}
       <p className='text-2xl text-green-400'>Time: {currentTime}</p>
