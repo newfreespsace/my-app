@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 
 interface Props {
+  problemId: number;
   problemTitle: string;
   descriptionView: React.ReactNode;
   submitView: React.ReactNode;
@@ -12,13 +13,7 @@ interface Props {
   statsView: React.ReactNode; // 提取出来的通过数/提交数统计部分
 }
 
-export default function ProblemClientContainer({
-  problemTitle,
-  descriptionView,
-  rightPart,
-  submitView,
-  statsView,
-}: Props) {
+export default function ProblemClientContainer({ problemId, problemTitle, descriptionView, rightPart, submitView, statsView }: Props) {
   const [isEditorMode, setIsEditorMode] = useState(false);
 
   return (
@@ -26,9 +21,9 @@ export default function ProblemClientContainer({
       {/* Header 保持在容器内部，这样按钮才能访问到状态 */}
       <header className='flex gap-2 max-w-300 m-auto justify-between pt-4 px-4'>
         <div className='flex flex-col gap-4 mt-4 mb-4'>
-          <p className='text-4xl font-bold'>{`#137. ${problemTitle}`}</p>
+          <p className='text-4xl font-bold'>{`#${problemId}. ${problemTitle}`}</p>
           <div className='flex gap-2'>
-            <Button onClick={() => setIsEditorMode(!isEditorMode)}>{isEditorMode ? '返回描述' : '提交代码'}</Button>
+            <Button onClick={() => setIsEditorMode(!isEditorMode)}>{isEditorMode ? '返回题目' : '提交代码'}</Button>
           </div>
         </div>
         {statsView}

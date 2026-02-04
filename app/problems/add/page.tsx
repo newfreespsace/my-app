@@ -15,6 +15,7 @@ const Page = () => {
     await dbConnect();
     console.log('aa');
     const rawFormData = {
+      problemId: formData.get('problemId'),
       title: formData.get('title'),
       content: formData.get('content'),
     };
@@ -22,13 +23,15 @@ const Page = () => {
     const problem = await Problem.create(rawFormData);
     revalidatePath('/problems');
     redirect('/problems'); // 跳回列表页
-
-    console.log(problem);
   }
 
   return (
     <form action={createProblem}>
       <FieldGroup>
+        <Field>
+          <FieldLabel htmlFor='problemId'>题目 ID</FieldLabel>
+          <Input id='problemId' name='problemId' placeholder='题目 ID，留空则自动分配' className='resize-none' />
+        </Field>
         <Field>
           <FieldLabel htmlFor='title'>标题</FieldLabel>
           <Input id='title' name='title' placeholder='' className='resize-none' />
