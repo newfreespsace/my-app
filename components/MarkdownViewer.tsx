@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeSlug from 'rehype-slug';
 
 import 'katex/dist/katex.min.css';
 
@@ -15,7 +16,7 @@ export default function MarkdownViewer({ content }: { content: string }) {
   /* 调整标题间距 */
   prose-headings:my-3 first:prose-p:mt-0 first:prose-headings:mt-0'
     >
-      <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
+      <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex, rehypeSlug]}>
         {content}
       </ReactMarkdown>
     </article>

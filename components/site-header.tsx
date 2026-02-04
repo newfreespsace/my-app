@@ -27,6 +27,10 @@ export function SiteHeader() {
               <Compass />
               工具集
             </Link>
+            <Link href='/articles' className={buttonVariants({ variant: 'ghost' })}>
+              <Compass />
+              文章
+            </Link>
           </div>
           <div className='flex gap-4'>
             <ModeToggle />

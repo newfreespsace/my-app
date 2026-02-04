@@ -10,7 +10,7 @@ export const deleteProblem = async (id: string) => {
   try {
     await dbConnect();
     await Problem.findByIdAndDelete(id);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 4000));
     isSuccess = true;
   } catch (error) {
     console.error('删除失败:', error);

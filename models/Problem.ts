@@ -10,7 +10,7 @@ const ProblemSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-ProblemSchema.pre('save', async function (next) {
+ProblemSchema.pre('save', async function () {
   if (!this.problemId) {
     // 自动增长逻辑...
     const counter = await Counter.findOneAndUpdate(

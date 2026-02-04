@@ -1,6 +1,8 @@
 // components/DeleteConfirmButton.tsx
 'use client';
 
+import { useTransition } from 'react'; // 1. 引入 useTransition
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,14 +16,28 @@ import {
 } from '@/components/ui/alert-dialog';
 import { deleteProblem } from '@/actions/problemActions'; // 引用上面的 Action
 import { Button } from './ui/button';
-import { Battery } from 'lucide-react';
+import { Battery, Loader2 } from 'lucide-react'; // 引入加载图标
 
 export function DeleteProblemConfirmButton({ id }: { id: string }) {
+  // 2. 使用 startTransition 跟踪异步任务状态
+  const [isPending, startTransition] = useTransition();
+
+  const handleDelete = () => {
+    startTransition(async () => {
+      try {
+        await deleteProblem(id);
+      } catch (error) {
+        console.error('删除失败:', error);
+        // 这里可以添加 toast 提示用户失败了
+      }
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive' className='justify-start rounded-none w-full gap-2'>
-          <Battery /> 删除题目
+        <Button variant='destructive' className='justify-start rounded-none w-full gap-2' disabled={isPending}>
+          {isPending ? <Loader2 className='animate-spin' /> : <Battery />} 删除题目
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -31,7 +47,13 @@ export function DeleteProblemConfirmButton({ id }: { id: string }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>取消</AlertDialogCancel>
-          <AlertDialogAction onClick={() => deleteProblem(id)} className='bg-destructive'>
+          <AlertDialogAction
+            onClick={(e) => {
+              // e.preventDefault(); // 防止对话框点击后立即关闭，由业务逻辑决定跳转
+              handleDelete();
+            }}
+            className='bg-destructive'
+          >
             确认删除
           </AlertDialogAction>
         </AlertDialogFooter>

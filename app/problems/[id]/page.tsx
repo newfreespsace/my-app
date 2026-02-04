@@ -1,10 +1,9 @@
 import Problem from '@/models/Problem';
-import { Battery, Edit } from 'lucide-react';
+import { Battery } from 'lucide-react';
 import Link from 'next/link';
 import dbConnect from '@/lib/db';
 
 import { Button, buttonVariants } from '@/components/ui/button';
-import { ProblemDeleteButton } from '@/components/DeleteButton';
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { cn } from '@/lib/utils';
 
@@ -28,17 +27,6 @@ const StatsView = () => (
 const RightPart = ({ id }: { id: string }) => (
   <div className='flex-col gap-4 flex'>
     <div className='p-4 flex flex-col max-w-65'>
-      <Link
-        href='#'
-        className={cn(
-          buttonVariants({ variant: 'default' }),
-          'bg-(--color-chart-2) hover:bg-(--color-chart-3) text-white',
-          'justify-start gap-2 rounded-none',
-        )}
-      >
-        <Battery />
-        提交
-      </Link>
       <Link href='#' className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
         <Battery />
         提交记录
@@ -62,13 +50,6 @@ const RightPart = ({ id }: { id: string }) => (
         编辑
       </Link>
       <DeleteProblemConfirmButton id={id} />
-    </div>
-    <div className='p-4 flex gap-2'>
-      <Button>
-        <Edit />
-        编辑
-      </Button>
-      <ProblemDeleteButton id={id} />
     </div>
   </div>
 );

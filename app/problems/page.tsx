@@ -1,6 +1,6 @@
 import Problem from '@/models/Problem';
 import dbConnect from '@/lib/db';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import ProblemListTable from '@/components/ProblemListTable';
 

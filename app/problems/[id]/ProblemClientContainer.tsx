@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface Props {
   problemId: number;
@@ -15,7 +16,6 @@ interface Props {
 
 export default function ProblemClientContainer({ problemId, problemTitle, descriptionView, rightPart, submitView, statsView }: Props) {
   const [isEditorMode, setIsEditorMode] = useState(false);
-
   return (
     <div className='w-full'>
       {/* Header 保持在容器内部，这样按钮才能访问到状态 */}
@@ -23,7 +23,12 @@ export default function ProblemClientContainer({ problemId, problemTitle, descri
         <div className='flex flex-col gap-4 mt-4 mb-4'>
           <p className='text-4xl font-bold'>{`#${problemId}. ${problemTitle}`}</p>
           <div className='flex gap-2'>
-            <Button onClick={() => setIsEditorMode(!isEditorMode)}>{isEditorMode ? '返回题目' : '提交代码'}</Button>
+            <Button
+              onClick={() => setIsEditorMode(!isEditorMode)}
+              className={cn(buttonVariants({ variant: 'default' }), 'bg-(--color-chart-2) hover:bg-(--color-chart-3) text-white')}
+            >
+              {isEditorMode ? '返回题目' : '提交代码'}
+            </Button>
           </div>
         </div>
         {statsView}
