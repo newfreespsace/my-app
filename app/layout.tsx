@@ -3,6 +3,7 @@ import { SiteHeader } from '@/components/site-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from 'sonner';
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>
+        <Toaster richColors position='bottom-right' />
       </body>
     </html>
   );

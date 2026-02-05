@@ -2,7 +2,7 @@ import Problem from '@/models/Problem';
 import dbConnect from '@/lib/db';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
-import ProblemListTable from '@/components/ProblemListTable';
+import ProblemListTable from '@/app/problems/_compontents/ProblemListTable';
 
 // 1. 定义单个 Problem 的结构
 interface Problem {
@@ -27,7 +27,7 @@ export default async function Page() {
           新增题目
         </Link>
       </div>
-      <div className='bg-card border rounded-l-xl mt-4'>
+      <div className='bg-card border rounded-b-sm mt-4'>
         <ProblemListTable problems={problems} />
       </div>
     </div>

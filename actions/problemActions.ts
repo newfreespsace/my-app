@@ -4,6 +4,8 @@ import dbConnect from '@/lib/db'; // 导入你之前的连接逻辑
 import Problem from '@/models/Problem';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { writeFile } from 'fs/promises';
+import { join } from 'path';
 
 export const deleteProblem = async (id: string) => {
   let isSuccess = false;
@@ -47,4 +49,29 @@ export async function calculateOnServer(a: number) {
     num,
     duration: parseFloat(duration),
   };
+}
+
+export async function submitCode(language: string, code: string) {
+  console.log(language);
+  console.log(code);
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+}
+
+export async function uploadFile(formData: FormData) {
+  const file = formData.get('file') as File;
+
+  if (!file || file.size === 0) {
+    throw new Error('请选择一个有效文件');
+  }
+
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  // 设定保存路径，这里保存在项目根目录的 /public 文件夹下
+  const path = join(process.cwd(), 'public', file.name);
+
+  await writeFile(path, buffer);
+  console.log(`文件已成功保存至: ${path}`);
+
+  return { success: true, fileName: file.name };
 }

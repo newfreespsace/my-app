@@ -3,12 +3,14 @@ import { Battery } from 'lucide-react';
 import Link from 'next/link';
 import dbConnect from '@/lib/db';
 
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { cn } from '@/lib/utils';
 
 import ProblemClientContainer from './ProblemClientContainer';
 import { DeleteProblemConfirmButton } from '@/components/DeleteConfirmButton';
+import CodeEditor from '@/app/problems/_compontents/CodeEditor';
+import CodeOptons from '@/app/problems/_compontents/CodeOptions';
 
 // 1. 静态统计部分
 const StatsView = () => (
@@ -56,18 +58,6 @@ const RightPart = ({ id }: { id: string }) => (
 
 const DescriptionView = ({ content }: { content: string }) => <MarkdownViewer content={content} />;
 
-// 3. 提交界面视图
-const SubmitView = () => (
-  <div className='bg-slate-50 p-6 border rounded-lg'>
-    <h2 className='text-xl mb-4 font-bold'>代码编辑器</h2>
-    {/* 这里可以放置你的代码编辑器组件 */}
-    <textarea className='w-full h-80 p-4 font-mono border' placeholder='// 请输入代码...' />
-    <div className='mt-4 flex justify-end'>
-      <Button size='lg'>立即评测</Button>
-    </div>
-  </div>
-);
-
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   await dbConnect();
@@ -84,7 +74,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       statsView={<StatsView />}
       descriptionView={<DescriptionView content={problem.content} />}
       rightPart={<RightPart id={problem.id} />}
-      submitView={<SubmitView />}
     />
   );
 };
