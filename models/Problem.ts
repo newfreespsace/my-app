@@ -5,7 +5,23 @@ const ProblemSchema = new mongoose.Schema(
   {
     problemId: { type: Number, unique: true },
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: {
+      description: String,
+      input: String,
+      output: String,
+      hint: String,
+    },
+    example: [
+      {
+        input: String,
+        output: String,
+      },
+    ],
+    config: {
+      timeLimit: { type: Number, default: 2000 }, // 毫秒
+      memoryLimit: { type: Number, default: 256 }, // MB
+    },
+    isPublic: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

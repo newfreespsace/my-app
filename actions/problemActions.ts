@@ -5,7 +5,7 @@ import Problem from '@/models/Problem';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { writeFile } from 'fs/promises';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { supabase } from '@/lib/supabase';
 
 export const deleteProblem = async (id: number) => {
@@ -160,4 +160,42 @@ export async function uploadProblemTestData(formData: FormData, problemId: numbe
   } = supabase.storage.from('uploads').getPublicUrl(filePath);
 
   return { success: true, url: publicUrl };
+}
+
+export async function createProblem(formData: FormData) {
+  'use server';
+  await dbConnect();
+
+  // 1. 提取固定字段
+  const problemId = formData.get('problemId');
+  const title = formData.get('title');
+  const description = formData.get('description');
+
+  // 2. 提取动态样例
+  // 技巧：遍历 formData 的键值对，筛选出以 sample_input_ 开头的
+  const samples: { input: string; output: string }[] = [];
+  let index = 0;
+  while (formData.has(`sample_input_${index}`)) {
+    samples.push({
+      input: formData.get(`sample_input_${index}`) as string,
+      output: formData.get(`sample_output_${index}`) as string,
+    });
+    index++;
+  }
+
+  // 3. 构造存入数据库的对象
+  const rawFormData = {
+    problemId,
+    title,
+    content: {
+      description,
+      input_format: formData.get('input_format'),
+      output_format: formData.get('output_format'),
+    },
+    samples, // 存入数组
+  };
+
+  const problem = await Problem.create(rawFormData);
+  revalidatePath('/problems');
+  redirect(`/problems/${problem.problemId}`);
 }
