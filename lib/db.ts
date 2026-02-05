@@ -1,4 +1,4 @@
-import mongoose, { Connection } from "mongoose";
+import mongoose, { Connection } from 'mongoose';
 
 // --- 1. 直接在这里声明全局类型 ---
 declare global {
@@ -11,7 +11,7 @@ declare global {
 const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
-  throw new Error("请在 .env.local 中定义 MONGODB_URI 环境变量");
+  throw new Error('请在 .env.local 中定义 MONGODB_URI 环境变量');
 }
 
 // --- 2. 逻辑部分保持不变 ---
@@ -31,9 +31,7 @@ async function dbConnect() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose
-      .connect(MONGODB_URI, opts)
-      .then((m) => m.connection);
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((m) => m.connection);
   }
 
   try {
