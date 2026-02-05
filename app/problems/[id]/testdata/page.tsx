@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <div className='flex gap-10 p-10 max-w-240 mx-auto'>
       <div className='flex-1'>
-        <h2 className='text-2xl font-bold mb-4'>测试数据</h2>
+        <h2 className='text-2xl font-bold mb-4'>测试数据11</h2>
         <Suspense fallback={<div className='animate-pulse bg-gray-100 h-40 rounded' />}>
           <TestDataList problemId={problemId} />
         </Suspense>
