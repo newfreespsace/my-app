@@ -18,7 +18,7 @@ import { deleteProblem } from '@/actions/problemActions'; // 引用上面的 Act
 import { Button } from './ui/button';
 import { Battery, Loader2 } from 'lucide-react'; // 引入加载图标
 
-export function DeleteProblemConfirmButton({ id }: { id: string }) {
+export function DeleteProblemConfirmButton({ id }: { id: number }) {
   // 2. 使用 startTransition 跟踪异步任务状态
   const [isPending, startTransition] = useTransition();
 
@@ -36,7 +36,7 @@ export function DeleteProblemConfirmButton({ id }: { id: string }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive' className='justify-start rounded-none w-full gap-2' disabled={isPending}>
+        <Button variant='destructive' className='justify-start rounded-none w-full gap-2 cursor-pointer' disabled={isPending}>
           {isPending ? <Loader2 className='animate-spin' /> : <Battery />} 删除题目
         </Button>
       </AlertDialogTrigger>

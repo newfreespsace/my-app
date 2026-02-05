@@ -7,7 +7,7 @@ import { Loader2, Trash2 } from 'lucide-react';
 // import { deleteProblem } from "@/app/actions";
 import { deleteProblem } from '@/actions/problemActions';
 
-export function ProblemDeleteButton({ id }: { id: string }) {
+export function ProblemDeleteButton({ id }: { id: number }) {
   const [isPending, startTransition] = useTransition();
 
   const onDelete = () => {

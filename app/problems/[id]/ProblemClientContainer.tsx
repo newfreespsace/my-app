@@ -4,20 +4,65 @@ import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import CodeEditor from '@/app/problems/_compontents/CodeEditor';
-import CodeOptons from '@/app/problems/_compontents/CodeOptions';
+import CodeEditor from '@/app/problems/_components/CodeEditor';
+import CodeOptons from '@/app/problems/_components/CodeOptions';
 import { toast } from 'sonner'; // 假设你使用了 toast 提示
 import { submitCode } from '@/actions/problemActions';
+import MarkdownViewer from '@/components/MarkdownViewer';
+import { DeleteProblemConfirmButton } from '@/components/DeleteConfirmButton';
+import { Battery } from 'lucide-react';
+import Link from 'next/link';
 
 interface Props {
-  problemId: number;
-  problemTitle: string;
-  descriptionView: React.ReactNode;
-  rightPart: React.ReactNode;
-  statsView: React.ReactNode; // 提取出来的通过数/提交数统计部分
+  problem: { problemId: number; title: string; content: string };
 }
 
-export default function ProblemClientContainer({ problemId, problemTitle, descriptionView, rightPart, statsView }: Props) {
+const StatsView = () => (
+  <div className='flex gap-6'>
+    <div className='flex flex-col items-center justify-center'>
+      <p className='text-4xl'>123</p>
+      <p>通过</p>
+    </div>
+    <div className='flex flex-col items-center justify-center'>
+      <p className='text-4xl'>2323</p>
+      <p>提交</p>
+    </div>
+  </div>
+);
+
+const DescriptionView = ({ content }: { content: string }) => <MarkdownViewer content={content} />;
+
+const RightPart = ({ id }: { id: number }) => (
+  <div className='flex-col gap-4 flex'>
+    <div className='p-4 flex flex-col max-w-65'>
+      <Link href='#' className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
+        <Battery />
+        提交记录
+      </Link>
+      <Link href='#' className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
+        <Battery />
+        统计
+      </Link>
+      <Link href='#' className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
+        <Battery />
+        讨论
+      </Link>
+      <Link href={`/problems/${id}/testdata`} className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rouned-none')}>
+        <Battery />
+        测试数据
+      </Link>
+    </div>
+    <div className='p-4 flex flex-col max-w-65'>
+      <Link href='#' className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
+        <Battery />
+        编辑
+      </Link>
+      <DeleteProblemConfirmButton id={id} />
+    </div>
+  </div>
+);
+
+export default function ProblemClientContainer({ problem }: Props) {
   const [isEditorMode, setIsEditorMode] = useState(false);
 
   const [language, setLanguage] = useState('cpp');
@@ -39,7 +84,7 @@ export default function ProblemClientContainer({ problemId, problemTitle, descri
       // 模拟请求
       await submitCode(language, code);
     } catch (error) {
-      toast.error('提交失败');
+      toast.error(`提交失败, ${error}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -50,7 +95,7 @@ export default function ProblemClientContainer({ problemId, problemTitle, descri
       {/* Header 保持在容器内部，这样按钮才能访问到状态 */}
       <header className='flex gap-2 max-w-300 m-auto justify-between pt-4 px-4'>
         <div className='flex flex-col gap-4 mt-4 mb-4'>
-          <p className='text-4xl font-bold'>{`#${problemId}. ${problemTitle}`}</p>
+          <p className='text-4xl font-bold'>{`#${problem.problemId}. ${problem.title}`}</p>
           <div className='flex gap-2'>
             <Button
               onClick={() => setIsEditorMode(!isEditorMode)}
@@ -60,7 +105,7 @@ export default function ProblemClientContainer({ problemId, problemTitle, descri
             </Button>
           </div>
         </div>
-        {statsView}
+        <StatsView />
       </header>
 
       <Separator />
@@ -83,9 +128,13 @@ export default function ProblemClientContainer({ problemId, problemTitle, descri
         ) : (
           <>
             <div className='flex-2'>
-              <main className='mt-3 max-w-300 m-auto px-4'>{descriptionView}</main>
+              <main className='mt-3 max-w-300 m-auto px-4'>
+                <DescriptionView content={problem.content} />
+              </main>
             </div>
-            <div className='flex-1'>{rightPart}</div>
+            <div className='flex-1'>
+              <RightPart id={problem.problemId} />
+            </div>
           </>
         )}
       </div>
