@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { supabase } from '@/lib/supabase';
+import { ProblemFormSchema } from '@/lib/schema';
 
 export const deleteProblem = async (id: number) => {
   let isSuccess = false;
@@ -163,39 +164,37 @@ export async function uploadProblemTestData(formData: FormData, problemId: numbe
 }
 
 export async function createProblem(formData: FormData) {
-  'use server';
   await dbConnect();
 
-  // 1. 提取固定字段
-  const problemId = formData.get('problemId');
-  const title = formData.get('title');
-  const description = formData.get('description');
+  // 1. 使用 Schema 解析 FormData
+  // Object.fromEntries 会处理掉大部分普通字段
+  const rawData = Object.fromEntries(formData.entries());
+  const validated = ProblemFormSchema.parse(rawData);
 
-  // 2. 提取动态样例
-  // 技巧：遍历 formData 的键值对，筛选出以 sample_input_ 开头的
-  const samples: { input: string; output: string }[] = [];
-  let index = 0;
-  while (formData.has(`sample_input_${index}`)) {
+  // 2. 手动处理 Schema 之外的复杂数组（samples）
+  const samples = [];
+  for (let i = 0; i < validated.sample_count; i++) {
     samples.push({
-      input: formData.get(`sample_input_${index}`) as string,
-      output: formData.get(`sample_output_${index}`) as string,
+      input: (formData.get(`sample_input_${i}`) as string) || '',
+      output: (formData.get(`sample_output_${i}`) as string) || '',
     });
-    index++;
   }
 
-  // 3. 构造存入数据库的对象
-  const rawFormData = {
-    problemId,
-    title,
+  // 3. 组装 Mongoose 模型需要的数据结构
+  const problemData = {
+    problemId: validated.problemId,
+    title: validated.title,
     content: {
-      description,
-      input_format: formData.get('input_format'),
-      output_format: formData.get('output_format'),
+      description: validated.description,
+      input_format: validated.input_format,
+      output_format: validated.output_format,
+      hint: validated.hint,
     },
-    samples, // 存入数组
+    samples: samples,
   };
 
-  const problem = await Problem.create(rawFormData);
+  const problem = await Problem.create(problemData);
+
   revalidatePath('/problems');
   redirect(`/problems/${problem.problemId}`);
 }

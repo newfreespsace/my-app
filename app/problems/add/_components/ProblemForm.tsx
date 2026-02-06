@@ -7,17 +7,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Plus, Trash2 } from 'lucide-react'; // 引入图标增加美感
 
+interface Sample {
+  id: string; // 内部唯一标识
+  input: string;
+  output: string;
+}
+
 export default function ProblemForm({ createAction }: { createAction: (formData: FormData) => void }) {
   // 管理样例列表，初始有一组
-  const [samples, setSamples] = useState([{ input: '', output: '' }]);
+  const [samples, setSamples] = useState<Sample[]>([{ id: crypto.randomUUID(), input: '', output: '' }]);
 
   const addSample = () => {
-    setSamples([...samples, { input: '', output: '' }]);
+    setSamples([...samples, { id: crypto.randomUUID(), input: '', output: '' }]);
   };
 
-  const removeSample = (index: number) => {
+  const removeSample = (id: string) => {
     if (samples.length <= 1) return; // 至少保留一组
-    setSamples(samples.filter((_, i) => i !== index));
+    setSamples(samples.filter((s) => s.id !== id));
+  };
+
+  const updateSample = (id: string, field: 'input' | 'output', value: string) => {
+    setSamples(samples.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
   };
 
   return (
@@ -60,7 +70,7 @@ export default function ProblemForm({ createAction }: { createAction: (formData:
             </Button>
           </div>
 
-          {samples.map((_, index) => (
+          {samples.map((sample, index) => (
             <div key={index} className='p-4 border rounded-lg bg-slate-50 relative space-y-4'>
               <div className='flex justify-between items-center'>
                 <span className='text-sm font-medium text-slate-500'>样例 #{index + 1}</span>
@@ -70,7 +80,7 @@ export default function ProblemForm({ createAction }: { createAction: (formData:
                     variant='ghost'
                     size='sm'
                     className='text-red-500 hover:text-red-700'
-                    onClick={() => removeSample(index)}
+                    onClick={() => removeSample(sample.id)}
                   >
                     <Trash2 className='w-4 h-4' />
                   </Button>
@@ -80,15 +90,29 @@ export default function ProblemForm({ createAction }: { createAction: (formData:
               <div className='grid grid-cols-2 gap-4'>
                 <Field>
                   <FieldLabel>输入样例</FieldLabel>
-                  <Textarea name={`sample_input_${index}`} className='bg-white font-mono' placeholder='Input data...' />
+                  <Textarea
+                    name={`sample_input_${index}`}
+                    value={sample.input}
+                    onChange={(e) => updateSample(sample.id, 'input', e.target.value)}
+                    className='bg-white font-mono'
+                    placeholder='Input data...'
+                  />
                 </Field>
                 <Field>
                   <FieldLabel>输出样例</FieldLabel>
-                  <Textarea name={`sample_output_${index}`} className='bg-white font-mono' placeholder='Expected output...' />
+                  <Textarea
+                    name={`sample_output_${index}`}
+                    value={sample.output}
+                    onChange={(e) => updateSample(sample.id, 'output', e.target.value)}
+                    className='bg-white font-mono'
+                    placeholder='Expected output...'
+                  />
                 </Field>
               </div>
             </div>
           ))}
+          {/* 技巧：向后端传递样例总数，方便后端循环解析 */}
+          <input type='hidden' name='sample_count' value={samples.length} />
         </div>
 
         <Button type='submit' className='w-full mt-6'>

@@ -12,9 +12,10 @@ import MarkdownViewer from '@/components/MarkdownViewer';
 import { DeleteProblemConfirmButton } from '@/components/DeleteConfirmButton';
 import { Battery } from 'lucide-react';
 import Link from 'next/link';
+import { Iproblem } from '@/models/Problem';
 
 interface Props {
-  problem: { problemId: number; title: string; content: string };
+  problem: Iproblem;
 }
 
 const StatsView = () => (
@@ -29,8 +30,6 @@ const StatsView = () => (
     </div>
   </div>
 );
-
-const DescriptionView = ({ content }: { content: string }) => <MarkdownViewer content={content} />;
 
 const RightPart = ({ id }: { id: number }) => (
   <div className='flex-col gap-4 flex'>
@@ -129,7 +128,31 @@ export default function ProblemClientContainer({ problem }: Props) {
           <>
             <div className='flex-2'>
               <main className='mt-3 max-w-300 m-auto px-4'>
-                <DescriptionView content={problem.content} />
+                {/* <DescriptionView content={problem.content} /> */}
+                {problem.content.description && (
+                  <>
+                    <h1 className='text-2xl font-bold'>题目描述</h1>
+                    <MarkdownViewer content={problem.content.description} />
+                  </>
+                )}
+                {problem.content.input_format && (
+                  <>
+                    <h1 className='text-2xl font-bold'>输入格式</h1>
+                    <MarkdownViewer content={problem.content.input_format} />
+                  </>
+                )}
+                {problem.content.output_format && (
+                  <>
+                    <h1 className='text-2xl font-bold'>输出格式</h1>
+                    <MarkdownViewer content={problem.content.output_format} />
+                  </>
+                )}
+                {problem.content.hint && (
+                  <>
+                    <h1 className='text-2xl font-bold'>数据范围和提示</h1>
+                    <MarkdownViewer content={problem.content.hint} />
+                  </>
+                )}
               </main>
             </div>
             <div className='flex-1'>

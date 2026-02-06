@@ -1,17 +1,42 @@
+import { Model } from 'mongoose';
+
 import mongoose from 'mongoose';
 import Counter from './Counter';
 
-const ProblemSchema = new mongoose.Schema(
+export interface ISample {
+  input: string;
+  output: string;
+}
+
+export interface Iproblem {
+  _id?: string; // 加上这个，渲染列表时 key 就有保障了
+  problemId: number;
+  title: string;
+  content: {
+    description?: string;
+    input_format?: string;
+    output_format?: string;
+    hint?: string;
+  };
+  config: {
+    timeLimit: number;
+    memoryLimit: number;
+  };
+  isPublic: boolean;
+  samples: ISample[];
+}
+
+const ProblemSchema = new mongoose.Schema<Iproblem>(
   {
     problemId: { type: Number, unique: true },
     title: { type: String, required: true },
     content: {
       description: String,
-      input: String,
-      output: String,
+      input_format: String,
+      output_format: String,
       hint: String,
     },
-    example: [
+    samples: [
       {
         input: String,
         output: String,
@@ -47,4 +72,5 @@ ProblemSchema.pre('save', async function () {
 });
 
 // 关键点：如果模型已存在则使用已有的，不存在再创建
-export default mongoose.models.Problem || mongoose.model('Problem', ProblemSchema);
+const Problem: Model<Iproblem> = mongoose.models.Problem || mongoose.model('Problem', ProblemSchema);
+export default Problem;
