@@ -9,7 +9,7 @@ import CodeOptons from '@/app/problems/_components/CodeOptions';
 import { toast } from 'sonner'; // 假设你使用了 toast 提示
 import { submitCode } from '@/actions/problemActions';
 import MarkdownViewer from '@/components/MarkdownViewer';
-import { DeleteProblemConfirmButton } from '@/components/DeleteConfirmButton';
+import { DeleteProblemConfirmButton } from '@/app/problems/_components/DeleteConfirmButton';
 import { Battery } from 'lucide-react';
 import Link from 'next/link';
 import { Iproblem } from '@/models/Problem';
