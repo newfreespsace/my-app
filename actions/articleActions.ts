@@ -8,7 +8,6 @@ import { redirect } from 'next/navigation';
 
 export const createArticleTag = async (tagcolor: string, formData: FormData) => {
   const tagname = formData.get('tagname') as string;
-
   if (!tagname || tagname.trim() === '') throw new Error('标签名称不能为空');
 
   await dbConnect();
@@ -18,13 +17,14 @@ export const createArticleTag = async (tagcolor: string, formData: FormData) => 
 };
 
 export async function createArticle(formData: FormData) {
-  'use server';
-
   await dbConnect();
   const rawFormData = {
     title: formData.get('title'),
     content: formData.get('content'),
+    tagname: formData.get('tagname'),
   };
+
+  console.log(rawFormData);
 
   await Article.create(rawFormData);
   revalidatePath('/articles');

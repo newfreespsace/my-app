@@ -27,7 +27,7 @@ export default async function Page() {
           新增题目
         </Link>
       </div>
-      <div className='bg-card border rounded-b-sm mt-4'>
+      <div className='mt-4'>
         <ProblemListTable problems={problems} />
       </div>
     </div>

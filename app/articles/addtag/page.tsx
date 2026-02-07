@@ -18,12 +18,7 @@ export default function AddTag() {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor='tagname'>标签名称</FieldLabel>
-              <Input
-                id='tagname'
-                name='tagname'
-                placeholder='标签名'
-                required
-              />
+              <Input id='tagname' name='tagname' placeholder='标签名' required />
             </Field>
             <Field>
               <FieldLabel htmlFor='tagcolor'>标签颜色</FieldLabel>

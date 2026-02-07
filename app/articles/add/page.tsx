@@ -7,13 +7,14 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import TagDropdownMenu from '../_components/TagDropdownMenu';
 import Tag from '@/models/Tag';
+import dbConnect from '@/lib/db';
 
 const Page = async () => {
+  await dbConnect();
   const tags = await Tag.find();
 
   const safeTags = tags.map((tag) => ({
     id: tag.id.toString(), // 假设 id 是个特殊对象
-    tagcolor: tag.tagcolor,
     tagname: tag.tagname,
   }));
 

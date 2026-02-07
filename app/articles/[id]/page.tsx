@@ -10,7 +10,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const article = await Article.findById(id);
 
   const headings = extractHeadings(article.content);
-  console.log(headings);
 
   return (
     <div className='w-full'>
@@ -21,10 +20,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <header className='flex gap-2 max-w-300 m-auto justify-between pt-4 p-4'>
             <div className='flex flex-col gap-4 mt-4 mb-4'>
               <p className='text-4xl font-bold'>{article.title}</p>
-            </div>
-            <div className='flex flex-col items-center justify-center'>
-              <p className='text-4xl'>123</p>
-              <p>通过</p>
             </div>
           </header>
 
