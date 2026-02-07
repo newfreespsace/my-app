@@ -115,6 +115,11 @@ export default function ProblemForm({ createAction }: { createAction: (formData:
           <input type='hidden' name='sample_count' value={samples.length} />
         </div>
 
+        <Field>
+          <FieldLabel htmlFor='hint'>数据范围</FieldLabel>
+          <Textarea id='hint' name='hint' placeholder='' className='resize-none' />
+        </Field>
+
         <Button type='submit' className='w-full mt-6'>
           发布题目
         </Button>
