@@ -24,7 +24,7 @@ export default function RootLayout({
           >
             <SidebarInset>
               <SiteHeader />
-              <div className=''>{children}</div>
+              <div className='mb-10'>{children}</div>
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>

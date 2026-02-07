@@ -3,12 +3,13 @@ import dbConnect from '@/lib/db';
 import { extractHeadings } from '@/lib/mdx';
 import Article from '@/models/Article';
 import { TableOfContents } from '@/components/TableOfContents';
+import ArticleTagList from '../_components/ArticleTagList';
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   await dbConnect();
-  const article = await Article.findById(id);
-
+  const article = await Article.findById(id).populate('tags');
+  if (!article) throw new Error('无此文章');
   const headings = extractHeadings(article.content);
 
   return (
@@ -26,6 +27,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <main className='mt-3 max-w-300 m-auto px-4'>
             <MarkdownViewer content={article.content} />
           </main>
+
+          {article.tags.length > 0 && <ArticleTagList tags={article.tags} />}
         </div>
         {/* 这里的 flex-1 容器必须具有和左侧正文一样的高度，不要设置 h-fit */}
         <div className='flex-1 relative'>
