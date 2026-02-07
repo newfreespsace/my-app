@@ -6,6 +6,7 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Plus, Trash2 } from 'lucide-react'; // 引入图标增加美感
+import { createProblem } from '@/actions/problemActions';
 
 interface Sample {
   id: string; // 内部唯一标识
@@ -13,7 +14,7 @@ interface Sample {
   output: string;
 }
 
-function ProblemForm({ createAction }: { createAction: (formData: FormData) => void }) {
+function ProblemForm() {
   // 管理样例列表，初始有一组
   const [samples, setSamples] = useState<Sample[]>([{ id: crypto.randomUUID(), input: '', output: '' }]);
 
@@ -32,7 +33,7 @@ function ProblemForm({ createAction }: { createAction: (formData: FormData) => v
 
   return (
     <div className='max-w-300 mx-auto mt-4 w-[calc(100vw-50px)]'>
-      <form action={createAction}>
+      <form action={createProblem}>
         <FieldGroup>
           {/* ... 其他固定字段 (ID, Title, Description 等) ... */}
           <Field>

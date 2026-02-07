@@ -1,5 +1,6 @@
 import Problem from '@/models/Problem';
 import dbConnect from '@/lib/db';
+import delay from '@/lib/delay';
 
 import ProblemClientContainer from './_components/ProblemClientContainer';
 
@@ -16,7 +17,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   await dbConnect();
 
   const problem = await Problem.findOne({ problemId: numericId });
-  await new Promise((resolve) => setTimeout(resolve, 4000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+  await delay(1000);
 
   if (!problem) {
     throw new Error('该题目已不存在或已被删除');

@@ -1,47 +1,53 @@
 import { Button } from '@/components/ui/button';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
-
 import { Textarea } from '@/components/ui/textarea';
-import dbConnect from '@/lib/db';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { Input } from '@/components/ui/input';
-import Article from '@/models/Article';
+import { createArticle } from '@/actions/articleActions';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
-const Page = () => {
-  async function createProblem(formData: FormData) {
-    'use server';
+import TagDropdownMenu from '../_components/TagDropdownMenu';
+import Tag from '@/models/Tag';
 
-    await dbConnect();
-    console.log('aa');
-    const rawFormData = {
-      title: formData.get('title'),
-      content: formData.get('content'),
-    };
+const Page = async () => {
+  const tags = await Tag.find();
 
-    await Article.create(rawFormData);
-    revalidatePath('/articles');
-    redirect(`/articles`); // 跳回列表页
-  }
+  const safeTags = tags.map((tag) => ({
+    id: tag.id.toString(), // 假设 id 是个特殊对象
+    tagcolor: tag.tagcolor,
+    tagname: tag.tagname,
+  }));
 
   return (
-    <div className='max-w-300 mx-auto mt-4'>
-      <form action={createProblem}>
-        <FieldGroup>
-          <Field>
-            <FieldLabel htmlFor='title'>标题</FieldLabel>
-            <Input id='title' name='title' placeholder='' className='resize-none' />
-          </Field>
-          <Field>
-            <FieldLabel htmlFor='content'>正文</FieldLabel>
-            <Textarea id='content' name='content' placeholder='' className='resize-none' />
-          </Field>
-          <Field orientation='horizontal'>
-            <Button type='submit'>Submit</Button>
-          </Field>
-        </FieldGroup>
-      </form>
-    </div>
+    <Card className='w-full sm:max-w-md mx-auto mt-4'>
+      <CardContent>
+        <form id='form-rhf-demo' action={createArticle}>
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor='title'>标题</FieldLabel>
+              <Input id='title' name='title' placeholder='标题' required />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor='content'>正文</FieldLabel>
+              <Textarea id='content' name='content' placeholder='正文' className='h-40' required />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor='tagname'>标签</FieldLabel>
+              <TagDropdownMenu tags={safeTags} />
+            </Field>
+          </FieldGroup>
+        </form>
+      </CardContent>
+      <CardFooter>
+        <Field orientation='horizontal'>
+          <Button type='button' variant='outline'>
+            Reset
+          </Button>
+          <Button type='submit' form='form-rhf-demo'>
+            Submit
+          </Button>
+        </Field>
+      </CardFooter>
+    </Card>
   );
 };
 
