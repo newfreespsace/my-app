@@ -19,9 +19,9 @@ export const createArticleTag = async (tagcolor: string, formData: FormData) => 
 export async function createArticle(formData: FormData) {
   await dbConnect();
   const rawFormData = {
-    title: formData.get('title'),
-    content: formData.get('content'),
-    tagname: formData.get('tagname'),
+    title: formData.get('title') as string,
+    content: formData.get('content') as string,
+    tagname: formData.get('tagname') as string,
   };
 
   console.log(rawFormData);
