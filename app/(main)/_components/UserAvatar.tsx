@@ -18,7 +18,7 @@ export default async function UserAvatarDropdown({ name }: { name: string }) {
         <Button variant='ghost' size='icon' className='rounded-full'>
           <Avatar>
             <AvatarImage src='/124599.jpeg' alt='shadcn' />
-            <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{name[0] && name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
