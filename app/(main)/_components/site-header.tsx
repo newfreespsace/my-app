@@ -34,6 +34,13 @@ export function SiteHeader() {
           </div>
           <div className='flex gap-4'>
             <ModeToggle />
+            <Link href='/signin' className={buttonVariants({ variant: 'ghost' })}>
+              Sign in
+            </Link>
+            <Link href='/signup' className={buttonVariants({ variant: 'ghost' })}>
+              Sign up
+            </Link>
+
             <UserAvatar />
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { ThemeProvider } from 'next-themes';
 import './globals.css';
 
 import { Toaster } from 'sonner';
@@ -10,7 +11,9 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body>
-        {children}
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
         <Toaster richColors position='bottom-right' />
       </body>
     </html>

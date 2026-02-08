@@ -1,4 +1,5 @@
 // import { SiteHeader } from '@/components/site-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { SiteHeader } from './_components/site-header';
 
 export default function RootLayout({
@@ -8,8 +9,19 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <SiteHeader />
-      <div className='mb-10'>{children}</div>
+      <SidebarProvider
+        style={
+          {
+            '--sidebar-width': 'calc(var(--spacing) * 72)',
+            '--header-height': 'calc(var(--spacing) * 12)',
+          } as React.CSSProperties
+        }
+      >
+        <SidebarInset>
+          <SiteHeader />
+          <div className=''>{children}</div>
+        </SidebarInset>
+      </SidebarProvider>
     </>
   );
 }
