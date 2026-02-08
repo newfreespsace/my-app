@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { X } from 'lucide-react';
 
 export default async function UserAvatarDropdown({ name }: { name: string }) {
   return (
