@@ -1,43 +1,30 @@
-import { buttonVariants } from '@/components/ui/button';
-import { Book, Compass, Home, Library } from 'lucide-react';
-import Link from 'next/link';
-
-import { ModeToggle } from './ModeToggle';
-import UserAvatar from '@/components/UserAvatar';
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function SiteHeader() {
   return (
-    <header className='sticky top-0 z-50 flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height) bg-background'>
-      <div className='flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6'>
-        <div className='flex w-full max-w-300 mx-auto justify-between'>
-          <div>
-            <Link href='/' className={buttonVariants({ variant: 'ghost' })}>
-              <Home />
-              主页
-            </Link>
-            <Link href='/problems' className={buttonVariants({ variant: 'ghost' })}>
-              <Library />
-              题库
-            </Link>
-            <Link href='/contest' className={buttonVariants({ variant: 'ghost' })}>
-              <Compass />
-              比赛
-            </Link>
-            <Link href='/tools' className={buttonVariants({ variant: 'ghost' })}>
-              <Compass />
-              工具集
-            </Link>
-            <Link href='/articles' className={buttonVariants({ variant: 'ghost' })}>
-              <Compass />
-              文章
-            </Link>
-          </div>
-          <div className='flex gap-4'>
-            <ModeToggle />
-            <UserAvatar />
-          </div>
+    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
+      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+        <SidebarTrigger className="-ml-1" />
+        <Separator
+          orientation="vertical"
+          className="mx-2 data-[orientation=vertical]:h-4"
+        />
+        <h1 className="text-base font-medium">Documents</h1>
+        <div className="ml-auto flex items-center gap-2">
+          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+            <a
+              href="https://github.com/shadcn-ui/ui/tree/main/apps/v4/app/(examples)/dashboard"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="dark:text-foreground"
+            >
+              GitHub
+            </a>
+          </Button>
         </div>
       </div>
     </header>
-  );
+  )
 }

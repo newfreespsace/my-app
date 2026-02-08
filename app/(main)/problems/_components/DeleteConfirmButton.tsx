@@ -15,7 +15,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { deleteProblem } from '@/actions/problemActions'; // 引用上面的 Action
-import { Button } from '../../../components/ui/button';
+import { Button } from '../../../../components/ui/button';
 import { Battery, Loader2 } from 'lucide-react'; // 引入加载图标
 
 export function DeleteProblemConfirmButton({ id }: { id: number }) {

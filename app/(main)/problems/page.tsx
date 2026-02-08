@@ -2,7 +2,7 @@ import Problem from '@/models/Problem';
 import dbConnect from '@/lib/db';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
-import ProblemListTable from '@/app/problems/_components/ProblemListTable';
+import ProblemListTable from '@/app/(main)/problems/_components/ProblemListTable';
 
 // 1. 定义单个 Problem 的结构
 interface Problem {

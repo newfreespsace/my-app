@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import CodeEditor from '@/app/problems/_components/CodeEditor';
-import CodeOptons from '@/app/problems/_components/CodeOptions';
+import CodeEditor from '@/app/(main)/problems/_components/CodeEditor';
+import CodeOptons from '@/app/(main)/problems/_components/CodeOptions';
 import { toast } from 'sonner'; // 假设你使用了 toast 提示
 import { submitCode } from '@/actions/problemActions';
-import MarkdownViewer from '@/components/MarkdownViewer';
-import { DeleteProblemConfirmButton } from '@/app/problems/_components/DeleteConfirmButton';
+import MarkdownViewer from '@/app/(main)/_components/MarkdownViewer';
+import { DeleteProblemConfirmButton } from '@/app/(main)/problems/_components/DeleteConfirmButton';
 import { Battery } from 'lucide-react';
 import Link from 'next/link';
 import { Iproblem } from '@/models/Problem';
@@ -147,6 +147,25 @@ export default function ProblemClientContainer({ problem }: Props) {
                     <MarkdownViewer content={problem.content.output_format} />
                   </>
                 )}
+                {problem.samples.length > 0 && (
+                  <div className='border-2'>
+                    <h2 className='text-2xl font-bold'>样例</h2>
+                    {problem.samples.map((sample, index) => (
+                      <div key={sample.input} className='flex gap-4'>
+                        <div>
+                          <h1 className='text-xl font-bold'>样例输入 {problem.samples.length > 1 && index + 1}</h1>
+                          <MarkdownViewer content={sample.input} />
+                        </div>
+                        <div>
+                          <h1 className='text-xl font-bold'>样例输出 {problem.samples.length > 1 && index + 1}</h1>
+                          <MarkdownViewer content={sample.output} />
+                        </div>
+                        <Separator />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {problem.content.hint && (
                   <>
                     <h1 className='text-2xl font-bold'>数据范围和提示</h1>

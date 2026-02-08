@@ -1,8 +1,8 @@
-import MarkdownViewer from '@/components/MarkdownViewer';
+import MarkdownViewer from '@/app/(main)/_components/MarkdownViewer';
 import dbConnect from '@/lib/db';
 import { extractHeadings } from '@/lib/mdx';
 import Article from '@/models/Article';
-import { TableOfContents } from '@/components/TableOfContents';
+import { TableOfContents } from '@/app/(main)/articles/_components/TableOfContents';
 import ArticleTagList from '../_components/ArticleTagList';
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
