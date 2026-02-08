@@ -1,10 +1,36 @@
+'use client';
+
+import { useActionState, useEffect } from 'react';
+import { authenticate } from '@/actions/authActions';
+
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { time } from 'console';
 
 export function SigninForm({ className, ...props }: React.ComponentProps<'div'>) {
+  const router = useRouter();
+  const [state, formAction, isPending] = useActionState(authenticate, { success: false, message: '' });
+
+  // 2. 监听 state 变化，如果有错误消息则弹出 toast
+  useEffect(() => {
+    if (!state.success && state.message) {
+      toast.error(state.message);
+    }
+    if (state.success && state.message) {
+      toast.success(state.message);
+      const timer = setTimeout(() => {
+        router.push('/');
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [state, router]);
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -13,7 +39,7 @@ export function SigninForm({ className, ...props }: React.ComponentProps<'div'>)
           <CardDescription>Login with your Apple or Google account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={formAction}>
             <FieldGroup>
               <Field>
                 <Button variant='outline' type='button'>
@@ -35,10 +61,12 @@ export function SigninForm({ className, ...props }: React.ComponentProps<'div'>)
                   Login with Google
                 </Button>
               </Field>
-              <FieldSeparator className='*:data-[slot=field-separator-content]:bg-card'>Or continue with</FieldSeparator>
+              <FieldSeparator className='*:data-[slot=field-separator-content]:bg-card'>
+                Or continue with
+              </FieldSeparator>
               <Field>
                 <FieldLabel htmlFor='email'>Email</FieldLabel>
-                <Input id='email' type='email' placeholder='m@example.com' required />
+                <Input id='email' name='email' type='email' placeholder='m@example.com' required disabled={isPending} />
               </Field>
               <Field>
                 <div className='flex items-center'>
@@ -47,10 +75,21 @@ export function SigninForm({ className, ...props }: React.ComponentProps<'div'>)
                     Forgot your password?
                   </a>
                 </div>
-                <Input id='password' type='password' required />
+                <Input id='password' name='password' type='password' required disabled={isPending} />
               </Field>
               <Field>
-                <Button type='submit'>Login</Button>
+                <Button type='submit' disabled={isPending}>
+                  {isPending ? (
+                    <>
+                      <Loader2 className='animate-spin' />
+                      登录中
+                    </>
+                  ) : state.success ? (
+                    '登录成功！即将跳转'
+                  ) : (
+                    '登录'
+                  )}
+                </Button>
                 <FieldDescription className='text-center'>
                   Don&apos;t have an account? <a href='#'>Sign up</a>
                 </FieldDescription>

@@ -14,7 +14,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
-        <Toaster richColors position='bottom-right' />
+        <Toaster richColors position='top-center' />
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+import { auth, signOut } from '@/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,14 +11,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 
-export default function UserAvatarDropdown() {
+export default async function UserAvatarDropdown({ name }: { name: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' size='icon' className='rounded-full'>
           <Avatar>
             <AvatarImage src='/124599.jpeg' alt='shadcn' />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -26,16 +27,20 @@ export default function UserAvatarDropdown() {
           <DropdownMenuItem asChild>
             <Link href='/admin'>DashBoard</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href='/login'>登录</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href='/signup'>注册</Link>
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem variant='destructive'>Log out</DropdownMenuItem>
+          <DropdownMenuItem className='p-0'>
+            <form
+              action={async () => {
+                'use server';
+                await signOut({ redirectTo: '/' }); // 指定退出后跳转的页面
+              }}
+              className='w-full'
+            >
+              <button className='w-full px-2 py-1.5 text-left text-sm text-destructive'>Log out</button>
+            </form>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

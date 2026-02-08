@@ -3,8 +3,12 @@ import { ChartAreaInteractive } from '@/app/(admin)/admin/_components/chart-area
 import { SectionCards } from '@/app/(admin)/admin/_components/section-cards';
 import { SiteHeader } from '@/app/(admin)/admin/_components/site-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
-export default function Page() {
+export default async function Page() {
+  const session = await auth();
+  if (!session) redirect('/signin');
   return (
     <SidebarProvider
       style={

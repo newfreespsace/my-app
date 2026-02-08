@@ -4,8 +4,10 @@ import Link from 'next/link';
 
 import { ModeToggle } from './ModeToggle';
 import UserAvatar from '@/app/(main)/_components/UserAvatar';
+import { auth } from '@/auth';
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const session = await auth();
   return (
     <header className='sticky top-0 z-50 flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height) bg-background'>
       <div className='flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6'>
@@ -34,14 +36,18 @@ export function SiteHeader() {
           </div>
           <div className='flex gap-4'>
             <ModeToggle />
-            <Link href='/signin' className={buttonVariants({ variant: 'ghost' })}>
-              Sign in
-            </Link>
-            <Link href='/signup' className={buttonVariants({ variant: 'ghost' })}>
-              Sign up
-            </Link>
-
-            <UserAvatar />
+            {session ? (
+              <UserAvatar name={session.user ? (session.user.name as string) : ''} />
+            ) : (
+              <>
+                <Link href='/signin' className={buttonVariants({ variant: 'ghost' })}>
+                  Sign in
+                </Link>
+                <Link href='/signup' className={buttonVariants({ variant: 'ghost' })}>
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

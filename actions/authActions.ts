@@ -6,18 +6,15 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
 import delay from '@/lib/delay';
 import User from '@/models/User';
+import { success } from 'zod';
 
-export async function authenticate(formData: FormData) {
+export async function authenticate(prevState: { success: boolean; message: string }, formData: FormData) {
   try {
-    await signIn('credentials', formData);
+    await signIn('credentials', { ...Object.fromEntries(formData), redirect: false });
+    return { success: true, message: '登录成功' };
   } catch (error) {
     if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return '账号或密码错误';
-        default:
-          return '登录失败，请稍后再试';
-      }
+      return { success: false, message: error.type === 'CredentialsSignin' ? '账号密码错误' : '登录失败' };
     }
     throw error;
   }
