@@ -19,10 +19,10 @@ import {
   IconUsers,
 } from '@tabler/icons-react';
 
-import { NavDocuments } from '@/components/nav-documents';
-import { NavMain } from '@/components/nav-main';
-import { NavSecondary } from '@/components/nav-secondary';
-import { NavUser } from '@/components/nav-user';
+import { NavDocuments } from '@/app/(admin)/admin/_components/nav-documents';
+import { NavMain } from '@/app/(admin)/admin/_components/nav-main';
+import { NavSecondary } from '@/app/(admin)/admin/_components/nav-secondary';
+import { NavUser } from '@/app/(admin)/admin/_components/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -133,8 +133,8 @@ const data = {
   ],
   documents: [
     {
-      name: 'Data Library',
-      url: '#',
+      name: '首页',
+      url: '/',
       icon: IconDatabase,
     },
     {

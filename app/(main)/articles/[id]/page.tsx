@@ -1,7 +1,7 @@
 import MarkdownViewer from '@/app/(main)/_components/MarkdownViewer';
 import dbConnect from '@/lib/db';
 import { extractHeadings } from '@/lib/mdx';
-import Article from '@/models/Article';
+import Article, { IArticle } from '@/models/Article';
 import { TableOfContents } from '@/app/(main)/articles/_components/TableOfContents';
 import ArticleTagList from '../_components/ArticleTagList';
 import { ITag } from '@/models/Tag';
@@ -11,8 +11,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   await dbConnect();
   const article = (await Article.findById(id).populate('tags').lean()) as (Omit<IArticle, 'tags'> & { tags: ITag[] }) | null;
   if (!article) throw new Error('无此文章');
-
-  console.log(article);
 
   const headings = extractHeadings(article.content);
 

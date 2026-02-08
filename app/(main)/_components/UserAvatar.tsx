@@ -26,8 +26,12 @@ export default function UserAvatarDropdown() {
           <DropdownMenuItem asChild>
             <Link href='/admin'>DashBoard</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href='/login'>登录</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href='/signup'>注册</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
