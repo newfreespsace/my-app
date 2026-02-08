@@ -1,12 +1,14 @@
 // models/Article.ts
 import mongoose, { Model } from 'mongoose';
+import { ITag } from './Tag';
 
 // 如果你之前定义了 ITag 接口，这里可以引用它的类型
 // 定义 Article 的数据接口
 export interface IArticle extends Document {
+  id: string;
   title: string;
   content: string;
-  tags: mongoose.Types.ObjectId[]; // 存储的是 ID 数组
+  tags: (mongoose.Types.ObjectId | ITag)[]; // 存储的是 ID 数组
   createdAt: Date;
   updatedAt: Date;
 }

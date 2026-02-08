@@ -15,7 +15,7 @@ export default async function ArticlesPage() {
   }));
 
   return (
-    <div className=' max-w-300 mx-auto'>
+    <div className='w-[calc(100vw-50px)] max-w-300 mx-auto'>
       <div className='flex gap-2 mt-2'>
         <Link href='/articles/add' className={cn(buttonVariants({ variant: 'default' }))}>
           新增文章

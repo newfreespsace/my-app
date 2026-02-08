@@ -21,7 +21,7 @@ export default async function Page() {
   const problems = JSON.parse(JSON.stringify(rawProblems));
 
   return (
-    <div className='max-w-300 flex flex-col m-auto'>
+    <div className='max-w-300 flex flex-col m-auto w-[calc(100vw-50px)]'>
       <div className='ml-auto mt-4 gap-1'>
         <Link href='/problems/add' className={buttonVariants({})}>
           新增题目

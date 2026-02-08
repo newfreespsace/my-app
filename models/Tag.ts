@@ -4,6 +4,7 @@ export const TAG_COLORS = ['red', 'blue', 'green', 'yellow', 'purple', 'gray'] a
 export type TagColor = (typeof TAG_COLORS)[number];
 // 1. 定义数据接口
 export interface ITag extends Document {
+  id: string;
   tagname: string;
   tagcolor: TagColor;
   createdAt: Date;

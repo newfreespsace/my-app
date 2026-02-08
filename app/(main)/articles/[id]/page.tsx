@@ -4,12 +4,16 @@ import { extractHeadings } from '@/lib/mdx';
 import Article from '@/models/Article';
 import { TableOfContents } from '@/app/(main)/articles/_components/TableOfContents';
 import ArticleTagList from '../_components/ArticleTagList';
+import { ITag } from '@/models/Tag';
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   await dbConnect();
-  const article = await Article.findById(id).populate('tags');
+  const article = (await Article.findById(id).populate('tags').lean()) as (Omit<IArticle, 'tags'> & { tags: ITag[] }) | null;
   if (!article) throw new Error('无此文章');
+
+  console.log(article);
+
   const headings = extractHeadings(article.content);
 
   return (

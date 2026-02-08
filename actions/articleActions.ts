@@ -21,7 +21,7 @@ export async function createArticle(formData: FormData) {
   const rawFormData = {
     title: formData.get('title') as string,
     content: formData.get('content') as string,
-    tagname: formData.get('tagname') as string,
+    tags: [formData.get('tagid') as string],
   };
 
   console.log(rawFormData);
