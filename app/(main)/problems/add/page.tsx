@@ -16,10 +16,10 @@ interface Sample {
 
 function ProblemForm() {
   // 管理样例列表，初始有一组
-  const [samples, setSamples] = useState<Sample[]>([{ id: crypto.randomUUID(), input: '', output: '' }]);
+  const [samples, setSamples] = useState<Sample[]>([{ id: 'initial-1', input: '', output: '' }]);
 
   const addSample = () => {
-    setSamples([...samples, { id: crypto.randomUUID(), input: '', output: '' }]);
+    setSamples([...samples, { id: window.crypto.randomUUID(), input: '', output: '' }]);
   };
 
   const removeSample = (id: string) => {
