@@ -1,86 +1,111 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, startTransition, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from '@/components/ui/field';
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSeparator } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { register } from '@/actions/authActions';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { SignupSchema } from '@/lib/schema';
+import { SignupType } from '@/lib/schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+
 export function SignupForm({ className, ...props }: React.ComponentProps<'form'>) {
-  // state: 存放 Action 返回的结果
-  // formAction: 绑定到 form 的 action 属性
-  // isPending: 是否正在提交中（加载状态）
-  // 在 useActionState 中，第二个参数被称为 initialState（初始状态）。
-  // 它的作用是定义在表单第一次渲染时，且用户还没有点击提交按钮之前，state 变量的默认值。
-  const [state, formAction, isPending] = useActionState(register, {
-    message: '',
-    success: false,
-    fields: { name: '', email: '' },
+  const router = useRouter();
+  const form = useForm<SignupType>({
+    resolver: zodResolver(SignupSchema),
+    mode: 'onChange',
+
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 
-  const router = useRouter();
+  const [state, formAction, isPending] = useActionState(register, null);
 
   useEffect(() => {
-    if (state.success) {
+    if (!state) return;
+
+    // 1. 处理字段级错误（重点：将后端 Zod 错误映射回 RHF）
+    if (state.errors) {
+      Object.entries(state.errors).forEach(([key, messages]) => {
+        form.setError(key as keyof SignupType, {
+          type: 'server',
+          message: messages?.[0], // 取 Zod 返回的第一条错误信息
+        });
+      });
+    }
+
+    if (state?.success) {
+      toast.success(state.message);
       setTimeout(() => {
         router.push('/signin');
-      }, 1000);
+      }, 2000);
     }
-  }, [state, router]);
+
+    // 3. 处理全局逻辑错误（非字段错误，如“服务器崩溃”）
+    if (!state.success && state.message && !state.errors) {
+      toast.error(state.message);
+    }
+  }, [state, router, form]);
+
+  const onSubmit = (data: SignupType) => {
+    startTransition(() => {
+      formAction(data);
+    });
+  };
 
   return (
-    <form className={cn('flex flex-col gap-6', className)} {...props} action={formAction}>
+    <form className={cn('flex flex-col gap-6', className)} {...props} onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup>
         <div className='flex flex-col items-center gap-1 text-center'>
           <h1 className='text-2xl font-bold'>Create your account</h1>
           <p className='text-muted-foreground text-sm text-balance'>Fill in the form below to create your account</p>
         </div>
 
-        {/* 1. 专门的错误/成功消息显示区 */}
-        {state.message && (
-          <div
-            className={cn(
-              'p-3 rounded-md text-sm font-medium text-center',
-              state.success
-                ? 'bg-green-50 text-green-600 border border-green-200'
-                : 'bg-destructive/10 text-destructive border border-destructive/20',
-            )}
-          >
-            {state.message}
-          </div>
-        )}
-
         <Field>
           <FieldLabel htmlFor='name'>Full Name</FieldLabel>
-          <Input id='name' name='name' type='text' placeholder='John Doe' defaultValue={state.fields?.name} required />
+          <Input
+            {...form.register('name')}
+            id='name'
+            type='text'
+            placeholder='John Doe'
+            aria-invalid={!!form.formState.errors.name}
+          />
+          {form.formState.errors.name && <FieldError errors={[form.formState.errors.name]} />}
         </Field>
+
         <Field>
           <FieldLabel htmlFor='email'>Email</FieldLabel>
-          <Input
-            id='email'
-            name='email'
-            type='email'
-            placeholder='m@example.com'
-            defaultValue={state.fields?.email}
-            required
-          />
+          <Input {...form.register('email')} id='email' type='text' placeholder='m@example.com' required />
+          {form.formState.errors.email && <FieldError errors={[form.formState.errors.email]} />}
           <FieldDescription>
             We&apos;ll use this to contact you. We will not share your email with anyone else.
           </FieldDescription>
         </Field>
+
         <Field>
           <FieldLabel htmlFor='password'>Password</FieldLabel>
-          <Input id='password' name='password' type='password' required />
+          <Input {...form.register('password')} id='password' type='password' required />
+          {form.formState.errors.password && <FieldError errors={[form.formState.errors.password]} />}
           <FieldDescription>Must be at least 8 characters long.</FieldDescription>
         </Field>
+
         <Field>
           <FieldLabel htmlFor='confirm-password'>Confirm Password</FieldLabel>
-          <Input id='confirm-password' name='confirm-password' type='password' required />
+          <Input {...form.register('confirmPassword')} id='confirm-password' type='password' required />
+          {form.formState.errors.confirmPassword && <FieldError errors={[form.formState.errors.confirmPassword]} />}
           <FieldDescription>Please confirm your password.</FieldDescription>
         </Field>
+
         <Field>
           <Button type='submit' disabled={isPending} className='relative flex items-center justify-center gap-2'>
             {isPending && <Loader2 className='animate-spin' />}

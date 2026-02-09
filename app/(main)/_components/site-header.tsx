@@ -1,5 +1,5 @@
 import { buttonVariants } from '@/components/ui/button';
-import { Book, Compass, Home, Library } from 'lucide-react';
+import { Compass, Home, Library } from 'lucide-react';
 import Link from 'next/link';
 
 import { ModeToggle } from './ModeToggle';

@@ -1,4 +1,4 @@
-import { auth, signOut } from '@/auth';
+import { signOut } from '@/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
-import { X } from 'lucide-react';
 
 export default async function UserAvatarDropdown({ name }: { name: string }) {
   return (

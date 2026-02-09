@@ -6,7 +6,8 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
 import delay from '@/lib/delay';
 import User from '@/models/User';
-import { success } from 'zod';
+
+import { SignupSchema, type SignupType } from '@/lib/schema';
 
 export async function authenticate(prevState: { success: boolean; message: string }, formData: FormData) {
   try {
@@ -20,38 +21,44 @@ export async function authenticate(prevState: { success: boolean; message: strin
   }
 }
 
-export type RegisterFormState = {
-  message: string;
+// 定义返回类型，方便前端处理
+export type RegisterResponse = {
   success: boolean;
-  fields?: {
-    name?: string;
-    email?: string;
-  };
-} | null; // 初始状态可能为 null
+  message: string;
+  errors?: Partial<Record<keyof SignupType, string[]>>; // 用于存放字段级别的错误
+} | null;
 
-export async function register(prevState: RegisterFormState, formData: FormData) {
-  // const { email, password, name } = values;
-  const name = formData.get('name') as string;
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
-  const confirmPassword = formData.get('confirm-password') as string;
-
-  // 定义一个基础的返回对象，包含用户刚才填的内容
-  const fields = { name, email };
-
-  console.log(password, confirmPassword);
-  await dbConnect();
+export async function register(prevState: RegisterResponse, data: SignupType): Promise<RegisterResponse> {
   await delay(2000);
+  // 1. 使用 Zod 进行服务端验证
+  const validatedFields = SignupSchema.safeParse(data);
 
-  if (password !== confirmPassword) return { message: '两次输入的密码不一致', success: false, fields };
-  const existingUser = await User.findOne({ email });
-  if (existingUser) return { message: '邮箱已被注册', success: false, fields };
+  // 如果验证失败，直接返回错误信息
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      message: '数据格式验证失败',
+      errors: validatedFields.error.flatten().fieldErrors as Partial<Record<keyof SignupType, string[]>>,
+    };
+  }
+  // 解构验证后的安全数据
+  const { email, password, name } = validatedFields.data;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  await User.create({ name, email, password: hashedPassword });
+  try {
+    await dbConnect();
 
-  // 4. (可选) 注册成功后直接调用 signIn 自动登录
-  // await signIn("credentials", { email, password, redirectTo: "/dashboard" });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return { message: '邮箱已被注册', success: false, errors: { email: ['该邮箱已被占用'] } }; // 精确反馈到邮箱字段 };
 
-  return { message: '注册成功，页面即将跳转', success: true };
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await User.create({ name, email, password: hashedPassword });
+
+    return { message: '注册成功，页面即将跳转', success: true };
+  } catch (error) {
+    console.error('注册异常:', error);
+    return {
+      success: false,
+      message: '服务器内部错误，请稍后再试',
+    };
+  }
 }
