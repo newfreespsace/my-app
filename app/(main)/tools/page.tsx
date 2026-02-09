@@ -1,11 +1,5 @@
-import SSEClock from './serverTime';
-
 const tools = () => {
-  return (
-    <div className='max-w-300 mx-auto'>
-      <SSEClock />
-    </div>
-  );
+  return <div className='max-w-300 mx-auto'></div>;
 };
 
 export default tools;

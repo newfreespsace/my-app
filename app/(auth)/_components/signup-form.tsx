@@ -46,9 +46,10 @@ export function SignupForm({ className, ...props }: React.ComponentProps<'form'>
 
     if (state?.success) {
       toast.success(state.message);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         router.push('/signin');
       }, 2000);
+      return () => clearTimeout(timer);
     }
 
     // 3. 处理全局逻辑错误（非字段错误，如“服务器崩溃”）
@@ -124,7 +125,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<'form'>
             Sign up with GitHub
           </Button>
           <FieldDescription className='px-6 text-center'>
-            Already have an account? <a href='#'>Sign in</a>
+            Already have an account? <a href='/signin'>Sign in</a>
           </FieldDescription>
         </Field>
       </FieldGroup>

@@ -11,6 +11,7 @@ import { SignupSchema, type SignupType } from '@/lib/schema';
 
 export async function authenticate(prevState: { success: boolean; message: string }, formData: FormData) {
   try {
+    await delay(2000);
     await signIn('credentials', { ...Object.fromEntries(formData), redirect: false });
     return { success: true, message: '登录成功' };
   } catch (error) {
