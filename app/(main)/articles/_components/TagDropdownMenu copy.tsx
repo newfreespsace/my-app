@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 import { X } from 'lucide-react'; // 引入 Check 增强视觉反馈
 
-export default function TagDropdownMenu({ tags }: { tags: { id: string; tagname: string }[] }) {
+export default function TagDropdownMenu({ tags }: { tags: { id: string; tagcolor: string; tagname: string }[] }) {
   // 1. 状态改为数组
   const [chosenTags, setChosenTags] = useState<{ id: string; tagname: string }[]>([]);
 
@@ -25,7 +25,6 @@ export default function TagDropdownMenu({ tags }: { tags: { id: string; tagname:
   };
 
   const removeTag = (id: string) => {
-    console.log(id);
     setChosenTags((prev) => prev.filter((t) => t.id !== id));
   };
 
@@ -41,18 +40,28 @@ export default function TagDropdownMenu({ tags }: { tags: { id: string; tagname:
       {chosenTags.map((tag) => (
         <input key={tag.id} type='hidden' name='tagids' value={tag.id} />
       ))}
-      <div className='flex flex-wrap gap-1'>
-        {chosenTags.map((tag) => (
-          <span key={tag.id} className='bg-secondary px-2 py-0.5 rounded-md text-xs flex items-center gap-1'>
-            {tag.tagname}
-            <X size={12} onClick={() => removeTag(tag.id)} />
-          </span>
-        ))}
-      </div>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='outline' className='w-full justify-start gap-2 h-auto min-h-10 flex-wrap'>
-            <span className='text-muted-foreground'>选择标签 (可多选)</span>
+            {chosenTags.length === 0 ? (
+              <span className='text-muted-foreground'>选择标签 (可多选)</span>
+            ) : (
+              // 3. 在触发器内直接展示已选中的标签（可选，如果不展示则保留单行文本）
+              chosenTags.map((tag) => (
+                <span key={tag.id} className='bg-secondary px-2 py-0.5 rounded-md text-xs flex items-center gap-1'>
+                  {tag.tagname}
+                  <X
+                    size={12}
+                    className='cursor-pointer hover:text-destructive text-red-500'
+                    onClick={(e) => {
+                      e.stopPropagation(); // 防止触发下拉菜单
+                      removeTag(tag.id);
+                    }}
+                  />
+                </span>
+              ))
+            )}
           </Button>
         </DropdownMenuTrigger>
 

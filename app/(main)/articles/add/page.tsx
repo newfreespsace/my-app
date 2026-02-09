@@ -19,7 +19,7 @@ const Page = async () => {
   }));
 
   return (
-    <Card className='w-full sm:max-w-md mx-auto mt-4'>
+    <Card className='w-300 mx-auto mt-4'>
       <CardContent>
         <form id='form-rhf-demo' action={createArticle}>
           <FieldGroup>
@@ -31,7 +31,7 @@ const Page = async () => {
               <FieldLabel htmlFor='content'>正文</FieldLabel>
               <Textarea id='content' name='content' placeholder='正文' className='h-40' required />
             </Field>
-            <Field>
+            <Field className=''>
               <FieldLabel htmlFor='tagname'>标签</FieldLabel>
               <TagDropdownMenu tags={safeTags} />
             </Field>

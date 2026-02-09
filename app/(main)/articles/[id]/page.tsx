@@ -9,24 +9,39 @@ import { ITag } from '@/models/Tag';
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   await dbConnect();
-  const article = (await Article.findById(id).populate('tags').lean()) as (Omit<IArticle, 'tags'> & { tags: ITag[] }) | null;
+  const article = (await Article.findById(id).populate('tags').lean()) as
+    | (Omit<IArticle, 'tags'> & { tags: ITag[] })
+    | null;
   if (!article) throw new Error('无此文章');
 
   const headings = extractHeadings(article.content);
 
+  article.tags.map((tag) => {
+    console.log(tag._id);
+  });
+
   return (
     <div className='w-full'>
-      <div className='flex gap-4 mt-3 max-w-300 m-auto'>
+      <div className='flex gap-4 max-w-300 m-auto'>
         <div className='flex-1'></div>
         <div className='flex-3'>
           {/* Header 保持在容器内部，这样按钮才能访问到状态 */}
-          <header className='flex gap-2 max-w-300 m-auto justify-between pt-4 p-4'>
-            <div className='flex flex-col gap-4 mt-4 mb-4'>
-              <p className='text-4xl font-bold'>{article.title}</p>
+          <header className='flex flex-col gap-2 max-w-300 m-auto justify-between'>
+            <h1 className='relative inline-block text-2xl font-bold'>
+              <span className='relative z-10'>{article.title}</span>
+              <span className='absolute bottom-0 left-0 w-full h-3 bg-yellow-200 -z-10 opacity-60'></span>
+            </h1>
+            <div className='flex justify-end gap-2 text-gray-500'>
+              <p>
+                创建时间：{article.createdAt.toLocaleDateString()} {article.createdAt.toLocaleTimeString()}
+              </p>
+              <p>
+                修改时间：：{article.updatedAt.toLocaleDateString()} {article.updatedAt.toLocaleTimeString()}
+              </p>
             </div>
           </header>
 
-          <main className='mt-3 max-w-300 m-auto px-4'>
+          <main className='mt-3 max-w-300 m-auto'>
             <MarkdownViewer content={article.content} />
           </main>
 

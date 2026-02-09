@@ -1,6 +1,6 @@
 'use client';
 
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useRouter } from 'next/navigation';
 // 1. 定义单个 Article 的结构
 interface Article {
@@ -17,11 +17,11 @@ export default function ArticleTItleListTable({ articles }: ArticleListTableProp
   const router = useRouter();
   return (
     <Table>
-      <TableHeader>
+      {/* <TableHeader>
         <TableRow>
           <TableHead>标题</TableHead>
         </TableRow>
-      </TableHeader>
+      </TableHeader> */}
       <TableBody>
         {articles.map((article) => (
           <TableRow

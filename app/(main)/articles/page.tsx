@@ -3,7 +3,7 @@ import dbConnect from '@/lib/db';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import ArticleListTable from './_components/ArticleTitleListTable';
+import ArticleTitleListTable from './_components/ArticleTitleListTable';
 
 export default async function ArticlesPage() {
   await dbConnect();
@@ -16,7 +16,7 @@ export default async function ArticlesPage() {
 
   return (
     <div className='w-[calc(100vw-50px)] max-w-300 mx-auto'>
-      <div className='flex gap-2 mt-2'>
+      <div className='flex gap-2 justify-end'>
         <Link href='/articles/add' className={cn(buttonVariants({ variant: 'default' }))}>
           新增文章
         </Link>
@@ -28,7 +28,7 @@ export default async function ArticlesPage() {
         </Link>
       </div>
       <div>
-        <ArticleListTable articles={safaArticles} />
+        <ArticleTitleListTable articles={safaArticles} />
       </div>
     </div>
   );

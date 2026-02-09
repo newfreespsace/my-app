@@ -17,14 +17,13 @@ export const createArticleTag = async (tagcolor: string, formData: FormData) => 
 };
 
 export async function createArticle(formData: FormData) {
+  console.log(formData);
   await dbConnect();
   const rawFormData = {
     title: formData.get('title') as string,
     content: formData.get('content') as string,
-    tags: [formData.get('tagid') as string],
+    tags: formData.getAll('tagids') as string[],
   };
-
-  console.log(rawFormData);
 
   await Article.create(rawFormData);
   revalidatePath('/articles');

@@ -22,9 +22,7 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
           className={cn(
             'relative w-8 h-8 bg-amber-200 rounded-full transition-all hover:scale-110  active:scale-95 flex items-center justify-center',
             COLOR_MAP[color as keyof typeof COLOR_MAP],
-            value === color
-              ? 'ring-2 ring-offset-2 ring-slate-400'
-              : 'opacity-80',
+            value === color ? 'ring-2 ring-offset-2 ring-slate-400' : 'opacity-80',
           )}
         >
           {value === color && (
