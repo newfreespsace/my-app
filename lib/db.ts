@@ -1,4 +1,6 @@
 import mongoose, { Connection } from 'mongoose';
+import '@/models/Article';
+import '@/models/Tag';
 
 // --- 1. 直接在这里声明全局类型 ---
 declare global {
