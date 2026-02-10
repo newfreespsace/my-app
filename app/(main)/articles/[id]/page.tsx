@@ -28,10 +28,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           {/* Header 保持在容器内部，这样按钮才能访问到状态 */}
           <header className='flex flex-col gap-2 max-w-300 m-auto justify-between'>
             <h1 className='relative inline-block text-2xl font-bold'>
-              <span className='relative z-10 italic'>{article.title}</span>
+              <span className='relative z-10'>{article.title}</span>
               <span className='absolute bottom-0 left-0 w-full h-3 bg-yellow-200 -z-10 opacity-60'></span>
             </h1>
-            <div className='flex justify-start gap-2 text-gray-500'>
+            <div className='flex justify-start gap-2 text-gray-500 italic'>
               <p>
                 创建时间：{article.createdAt.toLocaleDateString()} {article.createdAt.toLocaleTimeString()}
               </p>

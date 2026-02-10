@@ -193,8 +193,13 @@ export async function createProblem(formData: FormData) {
     samples: samples,
   };
 
-  const problem = await Problem.create(problemData);
+  const t = [];
+  for (let i = 1; i <= 3000; i++) t.push(problemData);
 
-  revalidatePath('/problems');
-  redirect(`/problems/${problem.problemId}`);
+  await Problem.All;
+
+  // const problem = await Problem.create(problemData);
+
+  // revalidatePath('/problems');
+  // redirect(`/problems/${problem.problemId}`);
 }

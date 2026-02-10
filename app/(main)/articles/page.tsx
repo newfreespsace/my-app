@@ -4,13 +4,27 @@ import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import ArticleTitleListTable from './_components/ArticleTitleListTable';
+import PaginationForArticles from '@/components/PaginationForArticles';
 
-export default async function ArticlesPage() {
+export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   await dbConnect();
-  const articles = await Article.find();
+
+  // 1. 解析参数
+  const params = await searchParams;
+  const page = Number(params.page) || 1; // 当前页码，默认为 1
+  const limit = 10; // 每页显示条数
+  const skip = (page - 1) * limit; // 跳过的条数
+
+  // 2. 并行执行：获取分页数据和总数
+  const [articles, total] = await Promise.all([
+    Article.find().skip(skip).limit(limit).lean(),
+    Article.countDocuments(),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
 
   const safaArticles = articles.map((article) => ({
-    id: article.id,
+    id: article._id.toString(),
     title: article.title,
   }));
 
@@ -30,6 +44,7 @@ export default async function ArticlesPage() {
       <div>
         <ArticleTitleListTable articles={safaArticles} />
       </div>
+      <PaginationForArticles totalPages={totalPages} />
     </div>
   );
 }
