@@ -5,8 +5,13 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import ArticleTitleListTable from './_components/ArticleTitleListTable';
 import PaginationForArticles from '@/components/PaginationForArticles';
+import delay from '@/lib/delay';
 
-export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+export default async function ArticlesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   await dbConnect();
 
   // 1. 解析参数
@@ -21,11 +26,6 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
     Article.countDocuments(),
   ]);
 
-let a = 3;
-console.log(a+a+a)
-
-
-
   const totalPages = Math.ceil(total / limit);
 
   const safaArticles = articles.map((article) => ({
@@ -34,15 +34,15 @@ console.log(a+a+a)
   }));
 
   return (
-    <div className='w-[calc(100vw-50px)] max-w-300 mx-auto'>
-      <div className='flex gap-2 justify-end'>
-        <Link href='/articles/add' className={cn(buttonVariants({ variant: 'default' }))}>
+    <div className="w-[calc(100vw-50px)] max-w-300 mx-auto">
+      <div className="flex gap-2 justify-end">
+        <Link href="/articles/add" className={cn(buttonVariants({ variant: 'default' }))}>
           新增文章
         </Link>
-        <Link href='/articles/addtag' className={cn(buttonVariants({ variant: 'default' }))}>
+        <Link href="/articles/addtag" className={cn(buttonVariants({ variant: 'default' }))}>
           新增标签
         </Link>
-        <Link href='/articles/taglist' className={cn(buttonVariants({ variant: 'default' }))}>
+        <Link href="/articles/taglist" className={cn(buttonVariants({ variant: 'default' }))}>
           已有标签
         </Link>
       </div>
