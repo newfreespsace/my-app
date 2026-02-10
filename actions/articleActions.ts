@@ -25,7 +25,11 @@ export async function createArticle(formData: FormData) {
     tags: formData.getAll('tagids') as string[],
   };
 
-  await Article.create(rawFormData);
+  for (let i = 1; i <= 100000; i++) {
+    console.log(i);
+    rawFormData.content += i.toString();
+    await Article.create(rawFormData);
+  }
   revalidatePath('/articles');
   redirect(`/articles`); // 跳回列表页
 }
