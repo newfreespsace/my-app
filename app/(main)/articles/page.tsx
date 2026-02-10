@@ -21,6 +21,11 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
     Article.countDocuments(),
   ]);
 
+let a = 3;
+console.log(a)
+
+
+
   const totalPages = Math.ceil(total / limit);
 
   const safaArticles = articles.map((article) => ({
