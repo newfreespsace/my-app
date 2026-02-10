@@ -22,7 +22,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
   ]);
 
 let a = 3;
-console.log(a)
+console.log(a+a)
 
 
 
