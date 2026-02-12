@@ -1,6 +1,7 @@
-import ArticleEditForm from '@/app/(main)/articles/_components/ArticleEditForm';
 import dbConnect from '@/lib/db';
 import Tag from '@/models/Tag';
+
+import AddArticleAndPreview from '@/app/(main)/articles/add/AddArticleAndPreview';
 
 export default async function ArticleAddPage() {
   await dbConnect();
@@ -10,5 +11,6 @@ export default async function ArticleAddPage() {
     id: tag.id.toString(), // 假设 id 是个特殊对象
     tagName: tag.tagname,
   }));
-  return <ArticleEditForm tags={safeTags} />;
+
+  return <AddArticleAndPreview tags={safeTags} />;
 }

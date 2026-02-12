@@ -32,72 +32,72 @@ function ProblemForm() {
   };
 
   return (
-    <div className='max-w-300 mx-auto mt-4 w-[calc(100vw-50px)]'>
+    <div className="max-w-300 mx-auto mt-4 w-[calc(100vw-50px)]">
       <form action={createProblem}>
         <FieldGroup>
           {/* ... 其他固定字段 (ID, Title, Description 等) ... */}
           <Field>
-            <FieldLabel htmlFor='problemId'>题目 ID</FieldLabel>
+            <FieldLabel htmlFor="problemId">题目 ID</FieldLabel>
             <Input
-              id='problemId'
-              name='problemId'
-              placeholder='题目 ID，留空则自动分配'
-              className='resize-none'
-              type='number'
-              min='1'
+              id="problemId"
+              name="problemId"
+              placeholder="题目 ID，留空则自动分配"
+              className="resize-none"
+              type="number"
+              min="1"
             ></Input>
           </Field>
           <Field>
-            <FieldLabel htmlFor='title'>标题</FieldLabel>
-            <Input id='title' name='title' placeholder='' className='resize-none' />
+            <FieldLabel htmlFor="title">标题</FieldLabel>
+            <Input id="title" name="title" placeholder="" className="resize-none" />
           </Field>
           <Field>
-            <FieldLabel htmlFor='description'>题目描述</FieldLabel>
-            <Textarea id='description' name='description' placeholder='' className='resize-none' />
+            <FieldLabel htmlFor="description">题目描述</FieldLabel>
+            <Textarea id="description" name="description" placeholder="" className="resize-none" />
           </Field>
           <Field>
-            <FieldLabel htmlFor='input_format'>输入格式</FieldLabel>
-            <Textarea id='input_format' name='input_format' placeholder='' className='resize-none' />
+            <FieldLabel htmlFor="input_format">输入格式</FieldLabel>
+            <Textarea id="input_format" name="input_format" placeholder="" className="resize-none" />
           </Field>
           <Field>
-            <FieldLabel htmlFor='output_format'>输出格式</FieldLabel>
-            <Textarea id='output_format' name='output_format' placeholder='' className='resize-none' />
+            <FieldLabel htmlFor="output_format">输出格式</FieldLabel>
+            <Textarea id="output_format" name="output_format" placeholder="" className="resize-none" />
           </Field>
 
-          <div className='space-y-4 border-t pt-4 mt-4'>
-            <div className='flex items-center justify-between'>
-              <h3 className='text-lg font-bold'>测试样例</h3>
-              <Button type='button' variant='outline' size='sm' onClick={addSample}>
-                <Plus className='w-4 h-4 mr-2' /> 新增样例
+          <div className="space-y-4 border-t pt-4 mt-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold">测试样例</h3>
+              <Button type="button" variant="outline" size="sm" onClick={addSample}>
+                <Plus className="w-4 h-4 mr-2" /> 新增样例
               </Button>
             </div>
 
             {samples.map((sample, index) => (
-              <div key={index} className='p-4 border rounded-lg bg-slate-50 relative space-y-4'>
-                <div className='flex justify-between items-center'>
-                  <span className='text-sm font-medium text-slate-500'>样例 #{index + 1}</span>
+              <div key={index} className="p-4 border rounded-lg bg-slate-50 relative space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-slate-500">样例 #{index + 1}</span>
                   {samples.length > 1 && (
                     <Button
-                      type='button'
-                      variant='ghost'
-                      size='sm'
-                      className='text-red-500 hover:text-red-700'
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-500 hover:text-red-700"
                       onClick={() => removeSample(sample.id)}
                     >
-                      <Trash2 className='w-4 h-4' />
+                      <Trash2 className="w-4 h-4" />
                     </Button>
                   )}
                 </div>
 
-                <div className='grid grid-cols-2 gap-4'>
+                <div className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel>输入样例</FieldLabel>
                     <Textarea
                       name={`sample_input_${index}`}
                       value={sample.input}
                       onChange={(e) => updateSample(sample.id, 'input', e.target.value)}
-                      className='bg-white font-mono'
-                      placeholder='Input data...'
+                      className="bg-white font-mono"
+                      placeholder="Input data..."
                     />
                   </Field>
                   <Field>
@@ -106,22 +106,22 @@ function ProblemForm() {
                       name={`sample_output_${index}`}
                       value={sample.output}
                       onChange={(e) => updateSample(sample.id, 'output', e.target.value)}
-                      className='bg-white font-mono'
-                      placeholder='Expected output...'
+                      className="bg-white font-mono"
+                      placeholder="Expected output..."
                     />
                   </Field>
                 </div>
               </div>
             ))}
             {/* 技巧：向后端传递样例总数，方便后端循环解析 */}
-            <input type='hidden' name='sample_count' value={samples.length} />
+            <input type="hidden" name="sample_count" value={samples.length} />
           </div>
           <Field>
-            <FieldLabel htmlFor='hint'>数据范围和提示</FieldLabel>
-            <Textarea id='hint' name='hint' placeholder='' className='resize-none' />
+            <FieldLabel htmlFor="hint">数据范围和提示</FieldLabel>
+            <Textarea id="hint" name="hint" placeholder="" className="resize-none" />
           </Field>
 
-          <Button type='submit' className='w-full mt-6'>
+          <Button type="submit" className="w-full mt-6">
             发布题目
           </Button>
         </FieldGroup>
