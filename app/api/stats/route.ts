@@ -10,10 +10,6 @@ export async function GET(request: NextRequest) {
   };
 
   requestLog.push(currentData);
-
-  // 在控制台打印，方便你观察
-  console.log('--- 内存中的日志条数:', requestLog.length);
-
   return Response.json({
     message: 'Recorded',
     totalLogs: requestLog.length,

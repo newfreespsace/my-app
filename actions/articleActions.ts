@@ -17,7 +17,6 @@ export const createArticleTag = async (tagcolor: string, formData: FormData) => 
 };
 
 export async function createArticle(formData: FormData) {
-  console.log(formData);
   await dbConnect();
   const rawFormData = {
     title: formData.get('title') as string,
@@ -25,11 +24,30 @@ export async function createArticle(formData: FormData) {
     tags: formData.getAll('tagids') as string[],
   };
 
-  for (let i = 1; i <= 100000; i++) {
-    console.log(i);
-    rawFormData.content += i.toString();
-    await Article.create(rawFormData);
-  }
+  await Article.create(rawFormData);
+
   revalidatePath('/articles');
   redirect(`/articles`); // 跳回列表页
+}
+
+export async function editArticle(formData: FormData) {
+  await dbConnect();
+  const id = formData.get('id') as string;
+  const rawFormData = {
+    title: formData.get('title') as string,
+    content: formData.get('content') as string,
+    tags: formData.getAll('tagids') as string[],
+  };
+
+  // await Article.create(rawFormData);
+
+  await Article.findByIdAndUpdate(id, rawFormData);
+  revalidatePath('/articles');
+  redirect(`/articles`); // 跳回列表页
+}
+
+export async function deleteArticle(id: string) {
+  await Article.findByIdAndDelete(id);
+  revalidatePath('/articles');
+  redirect('/articles');
 }

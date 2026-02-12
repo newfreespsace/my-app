@@ -1,11 +1,4 @@
-import mongoose, { Document, Model } from 'mongoose';
-
-export interface IUser extends Document {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import mongoose, { Model, InferSchemaType } from 'mongoose';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -21,9 +14,22 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    settings: {
+      type: {
+        problemLimit: {
+          type: Number,
+          default: 10,
+        },
+        articleLimit: { type: Number, default: 10 },
+      },
+      required: true,
+      default: {},
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
+
+export type IUser = InferSchemaType<typeof UserSchema> & { _id: mongoose.Types.ObjectId };
 
 const User: Model<IUser> = mongoose.models.User || mongoose.model('User', UserSchema);
 

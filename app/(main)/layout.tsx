@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className={''}>
       <SidebarProvider
         style={
           {
@@ -19,9 +19,9 @@ export default function RootLayout({
       >
         <SidebarInset>
           <SiteHeader />
-          <div className='p-4'>{children}</div>
+          <div className="p-4">{children}</div>
         </SidebarInset>
       </SidebarProvider>
-    </>
+    </div>
   );
 }

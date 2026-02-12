@@ -1,23 +1,29 @@
 'use client';
 
 import Problem from '@/models/Problem';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { useRouter } from 'next/navigation';
+import PaginationForArticles from '@/components/PaginationForArticles';
 
 // 1. 定义单个 Problem 的结构
 interface Problem {
-  _id: string | number;
   problemId: number;
-  content: string;
-  // 如果还有其他字段，可以在这里继续添加，例如：
   title: string;
 }
 
 interface ProblemListTableProps {
   problems: Problem[];
+  totalPages: number;
 }
 
-export default function ProblemListTable({ problems }: ProblemListTableProps) {
+export default function ProblemListTable({ problems, totalPages }: ProblemListTableProps) {
   const router = useRouter();
 
   return (
@@ -30,9 +36,13 @@ export default function ProblemListTable({ problems }: ProblemListTableProps) {
       </TableHeader>
       <TableBody>
         {problems.map((problem) => (
-          <TableRow key={problem._id} className='cursor-pointer' onClick={() => router.push(`/problems/${problem.problemId}`)}>
-            <TableCell className='w-10 text-base'>{problem.problemId}</TableCell>
-            <TableCell className='w-10 text-base'>{problem.title}</TableCell>
+          <TableRow
+            key={problem.problemId}
+            className="cursor-pointer"
+            onClick={() => router.push(`/problems/${problem.problemId}`)}
+          >
+            <TableCell className="w-10 text-base">{problem.problemId}</TableCell>
+            <TableCell className="w-10 text-base">{problem.title}</TableCell>
           </TableRow>
         ))}
       </TableBody>

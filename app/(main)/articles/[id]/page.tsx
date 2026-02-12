@@ -5,7 +5,9 @@ import Article, { IArticle } from '@/models/Article';
 import { TableOfContents } from '@/app/(main)/articles/_components/TableOfContents';
 import ArticleTagList from '../_components/ArticleTagList';
 import { ITag } from '@/models/Tag';
-import delay from '@/lib/delay';
+import { Button, buttonVariants } from '@/components/ui/button';
+import DeleteArticleButton from '@/app/(main)/_components/DeleteArticleButton';
+import Link from 'next/link';
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -17,16 +19,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const headings = extractHeadings(article.content);
 
-  article.tags.map((tag) => {
-    console.log(tag._id);
-  });
-
   return (
-    <div className="w-full">
-      <div className="flex gap-4 max-w-300 m-auto">
-        <div className="flex-1"></div>
-        <div className="flex-3">
-          {/* Header 保持在容器内部，这样按钮才能访问到状态 */}
+    <div className="flex flex-col gap-2">
+      <div className="flex justify-end gap-2">
+        <Link href={`/articles/${id}/edit`} className={buttonVariants()}>
+          编辑文章{id}
+        </Link>
+        <DeleteArticleButton id={id} />
+      </div>
+      <div className="flex gap-4 w-full m-auto ">
+        <div className="flex-1 "></div>
+        <div className="flex-3 ">
           <header className="flex flex-col gap-2 max-w-300 m-auto justify-between">
             <h1 className="relative inline-block text-2xl font-bold">
               <span className="relative z-10">{article.title}</span>
@@ -50,8 +53,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {article.tags.length > 0 && <ArticleTagList tags={article.tags} />}
         </div>
-        {/* 这里的 flex-1 容器必须具有和左侧正文一样的高度，不要设置 h-fit */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative ">
           <aside className="hidden lg:block w-64 sticky top-50 self-start">
             <div className="border-l-2 border-slate-100 pl-4">
               <TableOfContents headings={headings} />
