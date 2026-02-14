@@ -12,7 +12,7 @@ export interface ArticleData {
 export default function AddArticleAndPreview({ tags }: { tags: { id: string; tagName: string }[] }) {
   const [article, setArticle] = useState<ArticleData>({ title: '', content: '' });
   return (
-    <div className="max-w-300 w-[calc(100vw-40px)] mx-auto mt-4 flex gap-4">
+    <div className=" w-[calc(100vw-40px)] mx-auto mt-4 flex gap-4">
       <div className="flex-1">
         <ArticleEditForm tags={tags} article={article} setArticle={setArticle} />
       </div>

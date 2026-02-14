@@ -4,18 +4,9 @@ import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import ArticleTitleListTable from './_components/ArticleTitleListTable';
-<<<<<<< HEAD
-import PaginationForArticles from '@/components/PaginationForArticles';
-import delay from '@/lib/delay';
-=======
 import PaginationForArticles from '@/components/PaginationByTotalPage';
->>>>>>> d115d2b (abcd)
 
-export default async function ArticlesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>;
-}) {
+export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   await dbConnect();
 
   // 1. 解析参数
