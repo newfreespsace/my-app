@@ -19,27 +19,9 @@ interface Problem {
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   await dbConnect();
-
-  const session = await auth();
-  const user = await User.findOne(session?.user);
-  // 1. 解析参数
-  const params = await searchParams;
-  const page = Number(params.page) || 1;
-  const limit = user ? user.settings.problemLimit : 10;
-  const skip = (page - 1) * limit;
-
-  // 2. 并行执行，获取分页数据和总文档数
-  const [problems, total] = await Promise.all([
-    Problem.find().skip(skip).limit(limit).sort('problemId').lean(),
-    Problem.countDocuments(),
-  ]);
-
-  const totalPages = Math.ceil(total / limit);
-
-  const safaProblems = problems.map((problem) => ({
-    problemId: problem.problemId,
-    title: problem.title,
-  }));
+  const rawProblems = await Problem.find().sort('problemId');
+  // 关键步骤：转换
+  const problems = JSON.parse(JSON.stringify(rawProblems));
 
   return (
     <div className="max-w-300 flex flex-col m-auto w-[calc(100vw-50px)] gap-4">

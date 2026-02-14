@@ -28,7 +28,7 @@ export interface Iproblem {
 
 const ProblemSchema = new mongoose.Schema<Iproblem>(
   {
-    problemId: { type: Number, unique: true },
+    problemId: { type: Number, unique: true, index: true },
     title: { type: String, required: true },
     content: {
       description: String,

@@ -166,12 +166,9 @@ export async function uploadProblemTestData(formData: FormData, problemId: numbe
 export async function createProblem(formData: FormData) {
   await dbConnect();
 
-  // 1. 使用 Schema 解析 FormData
-  // Object.fromEntries 会处理掉大部分普通字段
   const rawData = Object.fromEntries(formData.entries());
   const validated = ProblemFormSchema.parse(rawData);
 
-  // 2. 手动处理 Schema 之外的复杂数组（samples）
   const samples = [];
   for (let i = 0; i < validated.sample_count; i++) {
     samples.push({
@@ -180,7 +177,6 @@ export async function createProblem(formData: FormData) {
     });
   }
 
-  // 3. 组装 Mongoose 模型需要的数据结构
   const problemData = {
     problemId: validated.problemId,
     title: validated.title,
