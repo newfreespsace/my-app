@@ -1,16 +1,10 @@
 'use client';
 
 import Problem from '@/models/Problem';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useRouter } from 'next/navigation';
-import PaginationForArticles from '@/components/PaginationForArticles';
+// import PaginationForArticles from '@/components/PaginationForArticles';
+import PaginationForArticles from '@/components/PaginationByTotalPage';
 
 // 1. 定义单个 Problem 的结构
 interface Problem {

@@ -3,8 +3,11 @@ import dbConnect from '@/lib/db';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import ProblemListTable from '@/app/(main)/problems/_components/ProblemListTable';
-import PaginationForArticles from '@/components/PaginationForArticles';
+// import PaginationForArticles from '@/components/PaginationForArticles';
+import PaginationForArticles from '@/components/PaginationByTotalPage';
+//
 import { auth } from '@/auth';
+
 import User from '@/models/User';
 
 // 1. 定义单个 Problem 的结构
@@ -22,6 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const rawProblems = await Problem.find().sort('problemId');
   // 关键步骤：转换
   const problems = JSON.parse(JSON.stringify(rawProblems));
+  const totalPages = await Problem.countDocuments();
 
   return (
     <div className="max-w-300 flex flex-col m-auto w-[calc(100vw-50px)] gap-4">
@@ -31,7 +35,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
         </Link>
       </div>
       <div className="mt-4">
-        <ProblemListTable problems={safaProblems} totalPages={totalPages} />
+        <ProblemListTable problems={problems} totalPages={totalPages} />
       </div>
       <PaginationForArticles totalPages={totalPages} />
     </div>
