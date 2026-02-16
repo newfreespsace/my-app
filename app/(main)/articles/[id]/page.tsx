@@ -20,10 +20,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const headings = extractHeadings(article.content);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 max-w-300 mx-auto">
       <div className="flex justify-end gap-2">
         <Link href={`/articles/${id}/edit`} className={buttonVariants()}>
-          编辑文章{id}
+          编辑文章
         </Link>
         <DeleteArticleButton id={id} />
       </div>
@@ -37,12 +37,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </h1>
             <div className="flex justify-start gap-2 text-gray-500 italic">
               <p>
-                创建时间：{article.createdAt.toLocaleDateString()}{' '}
-                {article.createdAt.toLocaleTimeString()}
+                创建时间：{article.createdAt.toLocaleDateString()} {article.createdAt.toLocaleTimeString()}
               </p>
               <p>
-                修改时间：：{article.updatedAt.toLocaleDateString()}{' '}
-                {article.updatedAt.toLocaleTimeString()}
+                修改时间：：{article.updatedAt.toLocaleDateString()} {article.updatedAt.toLocaleTimeString()}
               </p>
             </div>
           </header>
