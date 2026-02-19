@@ -2,12 +2,17 @@ import Category from '@/models/Category';
 
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
+import dbConnect from '@/lib/db';
+import { revalidatePath } from 'next/cache';
 
 export function InputGroupBlockEnd() {
   const submitCategory = async (formData: FormData) => {
     'use server';
-    const newCategory = formData.get('category');
-    console.log(newCategory);
+    const newCategory = formData.get('category') as string;
+    if (newCategory) {
+      await Category.create({ name: newCategory });
+      revalidatePath('/articles/category');
+    }
   };
 
   return (
@@ -26,6 +31,7 @@ export function InputGroupBlockEnd() {
 }
 
 export default async function CategoryPage() {
+  await dbConnect();
   const categorys = await Category.find();
 
   return (
