@@ -17,7 +17,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     | null;
   if (!article) throw new Error('无此文章');
 
-  const headings = extractHeadings(article.content);
+  const headings = extractHeadings(article.content ? article.content : '');
 
   return (
     <div className="flex flex-col gap-2 max-w-300 mx-auto">
@@ -46,7 +46,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </header>
 
           <main className="mt-3 max-w-300 m-auto">
-            <MarkdownViewer content={article.content} />
+            <MarkdownViewer content={article.content ? article.content : ''} />
           </main>
 
           {article.tags.length > 0 && <ArticleTagList tags={article.tags} />}
