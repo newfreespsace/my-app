@@ -17,7 +17,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
 
   // 2. 并行执行：获取分页数据和总数
   const [articles, total] = await Promise.all([
-    Article.find().skip(skip).limit(limit).lean(),
+    Article.find().skip(skip).limit(limit).sort('-createdAt').lean(),
     Article.countDocuments(),
   ]);
 
