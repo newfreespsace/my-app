@@ -1,6 +1,4 @@
 import { AppSidebar } from '@/app/(admin)/admin/_components/app-sidebar';
-import { ChartAreaInteractive } from '@/app/(admin)/admin/_components/chart-area-interactive';
-import { SectionCards } from '@/app/(admin)/admin/_components/section-cards';
 import { SiteHeader } from '@/app/(admin)/admin/_components/site-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { auth } from '@/auth';

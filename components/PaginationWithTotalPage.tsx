@@ -12,10 +12,9 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { buttonVariants } from './ui/button';
-import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export default function PaginationForArticles({ totalPages }: { totalPages: number }) {
+export default function PaginationWithTotalPage({ totalPages }: { totalPages: number }) {
   const searchParams = useSearchParams();
   // 获取 URL 中的 page 参数，如果没有则默认为 1
   const page = Number(searchParams.get('page')) || 1;

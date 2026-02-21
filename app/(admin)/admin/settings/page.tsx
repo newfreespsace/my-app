@@ -1,14 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
@@ -56,9 +48,6 @@ export default async function Settings() {
           <CardHeader>
             <CardTitle>个人设置</CardTitle>
             <CardDescription>个人信息，网页显示相关</CardDescription>
-            <CardAction>
-              <Button variant="link">Sign Up</Button>
-            </CardAction>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-6">

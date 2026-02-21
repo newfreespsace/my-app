@@ -4,7 +4,7 @@ import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import ArticleTitleListTable from './_components/ArticleTitleListTable';
-import PaginationForArticles from '@/components/PaginationByTotalPage';
+import PaginationForArticles from '@/components/PaginationWithTotalPage';
 
 export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   await dbConnect();
@@ -26,11 +26,15 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
   const safaArticles = articles.map((article) => ({
     id: article._id.toString(),
     title: article.title,
+    createTime: article.createdAt,
   }));
 
   return (
-    <div className="w-[calc(100vw-50px)] max-w-300 mx-auto">
+    <div className="w-[calc(100vw-50px)] max-w-300 mx-auto gap-2 flex flex-col">
       <div className="flex gap-2 justify-end">
+        <Link href="/articles/category" className={cn(buttonVariants({ variant: 'default' }))}>
+          新增章节
+        </Link>
         <Link href="/articles/add" className={cn(buttonVariants({ variant: 'default' }))}>
           新增文章
         </Link>

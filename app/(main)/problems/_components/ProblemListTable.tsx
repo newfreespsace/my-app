@@ -3,10 +3,7 @@
 import Problem from '@/models/Problem';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useRouter } from 'next/navigation';
-// import PaginationForArticles from '@/components/PaginationForArticles';
-import PaginationForArticles from '@/components/PaginationByTotalPage';
 
-// 1. 定义单个 Problem 的结构
 interface Problem {
   problemId: number;
   title: string;
@@ -14,17 +11,16 @@ interface Problem {
 
 interface ProblemListTableProps {
   problems: Problem[];
-  totalPages: number;
 }
 
-export default function ProblemListTable({ problems, totalPages }: ProblemListTableProps) {
+export default function ProblemListTable({ problems }: ProblemListTableProps) {
   const router = useRouter();
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>标题 ID</TableHead>
+          <TableHead>题目 ID</TableHead>
           <TableHead>标题</TableHead>
         </TableRow>
       </TableHeader>
@@ -35,8 +31,8 @@ export default function ProblemListTable({ problems, totalPages }: ProblemListTa
             className="cursor-pointer"
             onClick={() => router.push(`/problems/${problem.problemId}`)}
           >
-            <TableCell className="w-10 text-base">{problem.problemId}</TableCell>
-            <TableCell className="w-10 text-base">{problem.title}</TableCell>
+            <TableCell className="">{problem.problemId}</TableCell>
+            <TableCell className="">{problem.title}</TableCell>
           </TableRow>
         ))}
       </TableBody>

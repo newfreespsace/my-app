@@ -45,5 +45,3 @@ export default async function CategoryPage() {
     </div>
   );
 }
-
-// test .....

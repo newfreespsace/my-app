@@ -3,29 +3,29 @@ import dbConnect from '@/lib/db';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import ProblemListTable from '@/app/(main)/problems/_components/ProblemListTable';
-// import PaginationForArticles from '@/components/PaginationForArticles';
-import PaginationForArticles from '@/components/PaginationByTotalPage';
-//
+import PaginationWithTotalPage from '@/components/PaginationWithTotalPage';
 import { auth } from '@/auth';
-
 import User from '@/models/User';
 
-// 1. 定义单个 Problem 的结构
 interface Problem {
   _id: string | number;
   content: string;
-  // 如果还有其他字段，可以在这里继续添加，例如：
-  // title?: string;
 }
-
-// 2. 定义组件 Props 的接口
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   await dbConnect();
-  const rawProblems = await Problem.find().sort('problemId');
-  // 关键步骤：转换
+
+  const params = await searchParams;
+  const page = Number(params.page) || 1;
+  const limit = 10;
+  const skip = (page - 1) * limit;
+
+  const [rawProblems, totalPages] = await Promise.all([
+    Problem.find().skip(skip).limit(limit).sort('problemId').lean(),
+    Problem.countDocuments(),
+  ]);
+
   const problems = JSON.parse(JSON.stringify(rawProblems));
-  const totalPages = await Problem.countDocuments();
 
   return (
     <div className="max-w-300 flex flex-col m-auto w-[calc(100vw-50px)] gap-4">
@@ -35,9 +35,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
         </Link>
       </div>
       <div className="mt-4">
-        <ProblemListTable problems={problems} totalPages={totalPages} />
+        <ProblemListTable problems={problems} />
       </div>
-      <PaginationForArticles totalPages={totalPages} />
+      <PaginationWithTotalPage totalPages={totalPages} />
     </div>
   );
 }
