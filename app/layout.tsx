@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { ThemeProvider } from 'next-themes';
 import './globals.css';
 
@@ -9,12 +11,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
-        <Toaster richColors position='top-center' />
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );
