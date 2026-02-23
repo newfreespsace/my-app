@@ -4,6 +4,7 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { InputGroup, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 import dbConnect from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import Link from 'next/link';
 
 export function InputGroupBlockEnd() {
   const submitCategory = async (formData: FormData) => {
@@ -30,7 +31,7 @@ export function InputGroupBlockEnd() {
   );
 }
 
-export default async function CategoryPage() {
+export default async function AllCategoryPage() {
   await dbConnect();
   const categorys = await Category.find();
 
@@ -40,7 +41,9 @@ export default async function CategoryPage() {
 
       <h1 className="text-3xl">所有分类</h1>
       {categorys.map((category) => (
-        <p key={category.name}>{category.name}</p>
+        <Link key={category.name} href={`/articles/category/${category.categorySlug}`} className="block">
+          {category.name}
+        </Link>
       ))}
     </div>
   );
