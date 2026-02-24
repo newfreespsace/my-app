@@ -3,13 +3,18 @@
 import ArticleEditForm from '@/app/(main)/articles/_components/ArticleEditForm';
 import { CardDemo } from '@/app/(main)/articles/add/CardDemo';
 import { useState } from 'react';
+import { TagColor } from '@/models/Tag';
 
 export interface ArticleData {
   title: string;
   content: string;
 }
 
-export default function AddArticleAndPreview({ tags }: { tags: { id: string; tagName: string }[] }) {
+export default function AddArticleAndPreview({
+  tags,
+}: {
+  tags: { _id: string; tagName: string; tagColor: TagColor }[];
+}) {
   const [article, setArticle] = useState<ArticleData>({ title: '', content: '' });
   return (
     <div className=" w-[calc(100vw-40px)] mx-auto mt-4 flex gap-4">

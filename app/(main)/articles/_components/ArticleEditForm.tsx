@@ -11,13 +11,14 @@ import TagDropdownMenu from '../_components/TagDropdownMenu';
 
 import { ArticleData } from '@/app/(main)/articles/add/AddArticleAndPreview';
 import { Dispatch, SetStateAction } from 'react';
+import { TagColor } from '@/models/Tag';
 
 const ArticleEditForm = ({
   tags,
   article,
   setArticle,
 }: {
-  tags: { id: string; tagName: string }[];
+  tags: { _id: string; tagName: string; tagColor: TagColor }[];
   article: ArticleData;
   setArticle: Dispatch<SetStateAction<ArticleData>>;
 }) => {
