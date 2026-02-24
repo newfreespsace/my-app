@@ -16,12 +16,9 @@ const ArticleTagList = async ({ tags }: { tags: { id: string; tagColor: TagColor
               'rounded-full transition-all duration-200 hover:scale-105 hover:shadow-sm cursor-default',
               // 颜色应用
               COLOR_MAP[tag.tagColor] || 'bg-gray-100 text-gray-800',
-              // 如果你的 COLOR_MAP 只有背景色，这里确保文字是白色的（或者根据背景调）
               'text-white shadow-sm'
             )}
           >
-            {/* 前置一个小圆点装饰（可选，增加精致感） */}
-            <span className="mr-1.5 h-2 w-2 rounded-full bg-white/40" />
             {tag.tagName}
           </div>
         ))}

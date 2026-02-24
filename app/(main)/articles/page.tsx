@@ -56,9 +56,9 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
         <Link href="/articles/taglist" className={cn(buttonVariants({ variant: 'default' }))}>
           已有标签
         </Link>
-        <Link href="/articles/category" className={cn(buttonVariants({ variant: 'default' }))}>
+        {/* <Link href="/articles/category" className={cn(buttonVariants({ variant: 'default' }))}>
           新增章节
-        </Link>
+        </Link> */}
       </div>
       <Suspense fallback={<div>加载中...</div>}>
         <ArticleList page={page} />

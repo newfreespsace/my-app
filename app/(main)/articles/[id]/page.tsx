@@ -5,7 +5,7 @@ import Article, { IArticle } from '@/models/Article';
 import { TableOfContents } from '@/app/(main)/articles/_components/TableOfContents';
 import ArticleTagList from '../_components/ArticleTagList';
 import { ITag } from '@/models/Tag';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import DeleteArticleButton from '@/app/(main)/_components/DeleteArticleButton';
 import Link from 'next/link';
 
