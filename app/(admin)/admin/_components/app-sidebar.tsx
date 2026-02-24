@@ -37,7 +37,7 @@ const data = {
   user: {
     name: 'shadcn',
     email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    avatar: 'https://ahjpjohnsakowdiqwirp.supabase.co/storage/v1/object/public/my-app/demo/0.9505371212361394.png',
   },
   navMain: [
     {
