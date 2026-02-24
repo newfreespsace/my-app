@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import { ThemeProvider } from 'next-themes';
 import './globals.css';
 

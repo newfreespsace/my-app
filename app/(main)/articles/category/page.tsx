@@ -5,7 +5,6 @@ import { InputGroup, InputGroupButton, InputGroupInput } from '@/components/ui/i
 import dbConnect from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import Link from 'next/link';
-import delay from '@/lib/delay';
 
 export function InputGroupBlockEnd() {
   const submitCategory = async (formData: FormData) => {
@@ -33,7 +32,6 @@ export function InputGroupBlockEnd() {
 }
 
 export default async function AllCategoryPage() {
-  await delay(3000);
   await dbConnect();
   const categorys = await Category.find();
 

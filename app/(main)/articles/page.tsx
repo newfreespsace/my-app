@@ -5,13 +5,11 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import ArticleTitleListTable from './_components/ArticleTitleListTable';
 import PaginationForArticles from '@/components/PaginationWithTotalPage';
+import { Suspense } from 'react';
 
-export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+const ArticleList = async ({ page }: { page: number }) => {
   await dbConnect();
 
-  // 1. 解析参数
-  const params = await searchParams;
-  const page = Number(params.page) || 1; // 当前页码，默认为 1
   const limit = 10; // 每页显示条数
   const skip = (page - 1) * limit; // 跳过的条数
 
@@ -30,6 +28,23 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
   }));
 
   return (
+    <>
+      <div>
+        <ArticleTitleListTable articles={safaArticles} />
+      </div>
+      <PaginationForArticles totalPages={totalPages} />
+    </>
+  );
+};
+
+export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  await dbConnect();
+
+  // 1. 解析参数
+  const params = await searchParams;
+  const page = Number(params.page) || 1; // 当前页码，默认为 1
+
+  return (
     <div className="w-[calc(100vw-50px)] max-w-300 mx-auto gap-2 flex flex-col">
       <div className="flex gap-2 justify-end">
         <Link href="/articles/category" className={cn(buttonVariants({ variant: 'default' }))}>
@@ -45,10 +60,9 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
           已有标签
         </Link>
       </div>
-      <div>
-        <ArticleTitleListTable articles={safaArticles} />
-      </div>
-      <PaginationForArticles totalPages={totalPages} />
+      <Suspense fallback={<div>加载中...</div>}>
+        <ArticleList page={page} />
+      </Suspense>
     </div>
   );
 }
