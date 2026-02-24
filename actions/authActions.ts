@@ -4,15 +4,11 @@ import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
-import delay from '@/lib/delay';
 import User from '@/models/User';
 
 import { SignupSchema, type SignupType } from '@/lib/schema';
 
-export async function authenticate(
-  prevState: { success: boolean; message: string },
-  formData: FormData
-) {
+export async function authenticate(prevState: { success: boolean; message: string }, formData: FormData) {
   try {
     await signIn('credentials', { ...Object.fromEntries(formData), redirect: false });
     return { success: true, message: '登录成功' };
@@ -34,11 +30,7 @@ export type RegisterResponse = {
   errors?: Partial<Record<keyof SignupType, string[]>>; // 用于存放字段级别的错误
 } | null;
 
-export async function register(
-  prevState: RegisterResponse,
-  data: SignupType
-): Promise<RegisterResponse> {
-  await delay(2000);
+export async function register(prevState: RegisterResponse, data: SignupType): Promise<RegisterResponse> {
   // 1. 使用 Zod 进行服务端验证
   const validatedFields = SignupSchema.safeParse(data);
 
@@ -47,9 +39,7 @@ export async function register(
     return {
       success: false,
       message: '数据格式验证失败',
-      errors: validatedFields.error.flatten().fieldErrors as Partial<
-        Record<keyof SignupType, string[]>
-      >,
+      errors: validatedFields.error.flatten().fieldErrors as Partial<Record<keyof SignupType, string[]>>,
     };
   }
   // 解构验证后的安全数据
@@ -59,8 +49,7 @@ export async function register(
     await dbConnect();
 
     const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return { message: '邮箱已被注册', success: false, errors: { email: ['该邮箱已被占用'] } }; // 精确反馈到邮箱字段 };
+    if (existingUser) return { message: '邮箱已被注册', success: false, errors: { email: ['该邮箱已被占用'] } }; // 精确反馈到邮箱字段 };
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({ name, email, password: hashedPassword });

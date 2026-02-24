@@ -41,7 +41,7 @@ export default async function AllCategoryPage() {
 
       <h1 className="text-3xl">所有分类</h1>
       {categorys.map((category) => (
-        <Link key={category.name} href={`/articles/category/${category.categorySlug}`} className="block">
+        <Link key={category.name} href={`/articles/category/${category._id}`} className="block">
           {category.name}
         </Link>
       ))}
