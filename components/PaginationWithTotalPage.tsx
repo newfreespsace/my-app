@@ -75,7 +75,7 @@ export default function PaginationWithTotalPage({ totalPages }: { totalPages: nu
           </PaginationItem>
         )}
 
-        {page !== totalPages && (
+        {totalPages > 0 && page !== totalPages && (
           <PaginationItem>
             <PaginationLink href={createPageURL(totalPages)}>{totalPages}</PaginationLink>
           </PaginationItem>

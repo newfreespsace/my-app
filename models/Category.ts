@@ -2,13 +2,13 @@ import mongoose, { InferSchemaType, Model } from 'mongoose';
 
 const CategorySchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
+    categoryName: { type: String, required: true, unique: true },
     chapters: [
       {
-        title: String,
+        chapterName: String,
         sections: [
           {
-            title: String,
+            sectionName: String,
             articleIds: [
               {
                 articleId: {
@@ -21,7 +21,6 @@ const CategorySchema = new mongoose.Schema(
         ],
       },
     ],
-    categorySlug: { type: String, unique: true, lowercase: true },
   },
   { timestamps: true }
 );

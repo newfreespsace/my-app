@@ -6,12 +6,12 @@ import dbConnect from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import Link from 'next/link';
 
-export function InputGroupBlockEnd() {
+function InputGroupBlockEnd() {
   const submitCategory = async (formData: FormData) => {
     'use server';
-    const newCategory = formData.get('category') as string;
+    const newCategory = formData.get('categoryName') as string;
     if (newCategory) {
-      await Category.create({ name: newCategory });
+      await Category.create({ categoryName: newCategory });
       revalidatePath('/articles/category');
     }
   };
@@ -22,7 +22,7 @@ export function InputGroupBlockEnd() {
         <Field>
           <FieldLabel htmlFor="category">新增分类</FieldLabel>
           <InputGroup>
-            <InputGroupInput id="category" name="category" />
+            <InputGroupInput id="categoryName" name="categoryName" />
             <InputGroupButton type="submit">提交</InputGroupButton>
           </InputGroup>
         </Field>
@@ -38,11 +38,10 @@ export default async function AllCategoryPage() {
   return (
     <div>
       <InputGroupBlockEnd />
-
       <h1 className="text-3xl">所有分类</h1>
       {categorys.map((category) => (
-        <Link key={category.name} href={`/articles/category/${category._id}`} className="block">
-          {category.name}
+        <Link key={category.categoryName} href={`/articles/category/${category._id}`} className="block">
+          {category.categoryName}
         </Link>
       ))}
     </div>
