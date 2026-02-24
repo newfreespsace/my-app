@@ -15,30 +15,33 @@ export default async function UserAvatarDropdown({ name }: { name: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost' size='icon' className='rounded-full'>
+        <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar>
-            <AvatarImage src='/124599.jpeg' alt='shadcn' />
+            <AvatarImage
+              src="https://ahjpjohnsakowdiqwirp.supabase.co/storage/v1/object/public/my-app/demo/0.9505371212361394.png"
+              alt="shadcn"
+            />
             <AvatarFallback>{name[0] && name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-32'>
+      <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href='/admin'>DashBoard</Link>
+            <Link href="/admin">DashBoard</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className='p-0'>
+          <DropdownMenuItem className="p-0">
             <form
               action={async () => {
                 'use server';
                 await signOut({ redirectTo: '/' }); // 指定退出后跳转的页面
               }}
-              className='w-full'
+              className="w-full"
             >
-              <button className='w-full px-2 py-1.5 text-left text-sm text-destructive'>Log out</button>
+              <button className="w-full px-2 py-1.5 text-left text-sm text-destructive">Log out</button>
             </form>
           </DropdownMenuItem>
         </DropdownMenuGroup>
