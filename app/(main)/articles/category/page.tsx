@@ -33,13 +33,13 @@ function InputGroupBlockEnd() {
 
 export default async function AllCategoryPage() {
   await dbConnect();
-  const categorys = await Category.find();
+  const categories = await Category.find();
 
   return (
     <div>
       <InputGroupBlockEnd />
       <h1 className="text-3xl">所有分类</h1>
-      {categorys.map((category) => (
+      {categories.map((category) => (
         <Link key={category.categoryName} href={`/articles/category/${category._id}`} className="block">
           {category.categoryName}
         </Link>
