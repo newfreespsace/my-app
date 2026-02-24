@@ -43,7 +43,11 @@ const CategoryPage = async ({ params }: { params: Promise<{ categoryId: string }
     <div className="flex h-[calc(100vh-5rem)] gap-6 p-6">
       {/* 左侧栏：固定宽度 */}
       <aside className="w-64 shrink-0">
-        <ChapterList category={plainCategory} onAddChapter={addChapterAction} onAddSection={addSectionAction} />
+        <ChapterList
+          category={plainCategory}
+          onAddChapterAction={addChapterAction}
+          onAddSectionAction={addSectionAction}
+        />
       </aside>
 
       {/* 右侧栏：内容展示区 */}

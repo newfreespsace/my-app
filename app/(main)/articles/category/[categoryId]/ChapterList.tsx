@@ -25,12 +25,12 @@ interface PlainCategory {
 
 export function ChapterList({
   category,
-  onAddChapter,
-  onAddSection,
+  onAddChapterAction,
+  onAddSectionAction,
 }: {
   category: PlainCategory;
-  onAddChapter: (formData: FormData) => void;
-  onAddSection: (chapterId: string, formData: FormData) => void; // 定义类型
+  onAddChapterAction: (formData: FormData) => void;
+  onAddSectionAction: (chapterId: string, formData: FormData) => void; // 定义类型
 }) {
   // 用于提交后清空输入框 (可选)
   // const formRef = useRef<HTMLFormElement>(null);
@@ -64,7 +64,7 @@ export function ChapterList({
                     {/* --- 新增小节表单 --- */}
                     <form
                       action={(formData) => {
-                        onAddSection(chapter._id, formData);
+                        onAddSectionAction(chapter._id, formData);
                         (document.getElementById(`input-section-${chapter._id}`) as HTMLInputElement).value = '';
                       }}
                       className="flex items-center gap-1 pl-0 mt-2"
@@ -97,7 +97,7 @@ export function ChapterList({
       <div className="mt-auto pt-4 border-t shrink-0">
         <form
           action={(formData) => {
-            onAddChapter(formData);
+            onAddChapterAction(formData);
             (document.getElementById('input-chapter') as HTMLInputElement).value = '';
           }}
           className="space-y-2"
