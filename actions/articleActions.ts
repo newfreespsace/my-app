@@ -6,12 +6,12 @@ import Tag from '@/models/Tag';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export const createArticleTag = async (tagcolor: string, formData: FormData) => {
-  const tagname = formData.get('tagname') as string;
-  if (!tagname || tagname.trim() === '') throw new Error('标签名称不能为空');
+export const createArticleTag = async (tagColor: string, formData: FormData) => {
+  const tagName = formData.get('tagname') as string;
+  if (!tagName || tagName.trim() === '') throw new Error('标签名称不能为空');
 
   await dbConnect();
-  await Tag.create({ tagname, tagcolor });
+  await Tag.create({ tagName, tagColor });
 
   redirect(`/articles/taglist`);
 };

@@ -5,28 +5,28 @@ export type TagColor = (typeof TAG_COLORS)[number];
 // 1. 定义数据接口
 export interface ITag extends Document {
   id: string;
-  tagname: string;
-  tagcolor: TagColor;
+  tagName: string;
+  tagColor: TagColor;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const TagSchema = new mongoose.Schema(
   {
-    tagname: {
+    tagName: {
       type: String,
       required: true,
       unique: true,
       trim: true,
       maxLength: 20,
     },
-    tagcolor: {
+    tagColor: {
       type: String,
       enum: TAG_COLORS,
       default: 'blue',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Tag: Model<ITag> = mongoose.models.Tag || mongoose.model<ITag>('Tag', TagSchema);

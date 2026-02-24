@@ -8,13 +8,11 @@ import { createArticle } from '@/actions/articleActions';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import TagDropdownMenu from '../_components/TagDropdownMenu';
-import dbConnect from '@/lib/db';
-import Tag from '@/models/Tag';
 
 import { ArticleData } from '@/app/(main)/articles/add/AddArticleAndPreview';
 import { Dispatch, SetStateAction } from 'react';
 
-const Page = ({
+const ArticleEditForm = ({
   tags,
   article,
   setArticle,
@@ -84,4 +82,4 @@ const Page = ({
   );
 };
 
-export default Page;
+export default ArticleEditForm;

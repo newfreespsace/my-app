@@ -47,9 +47,6 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
   return (
     <div className="w-[calc(100vw-50px)] max-w-300 mx-auto gap-2 flex flex-col">
       <div className="flex gap-2 justify-end">
-        <Link href="/articles/category" className={cn(buttonVariants({ variant: 'default' }))}>
-          新增章节
-        </Link>
         <Link href="/articles/add" className={cn(buttonVariants({ variant: 'default' }))}>
           新增文章
         </Link>
@@ -58,6 +55,9 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
         </Link>
         <Link href="/articles/taglist" className={cn(buttonVariants({ variant: 'default' }))}>
           已有标签
+        </Link>
+        <Link href="/articles/category" className={cn(buttonVariants({ variant: 'default' }))}>
+          新增章节
         </Link>
       </div>
       <Suspense fallback={<div>加载中...</div>}>

@@ -9,8 +9,6 @@ export interface ArticleData {
   content: string;
 }
 
-// let a = 3;
-
 export default function AddArticleAndPreview({ tags }: { tags: { id: string; tagName: string }[] }) {
   const [article, setArticle] = useState<ArticleData>({ title: '', content: '' });
   return (

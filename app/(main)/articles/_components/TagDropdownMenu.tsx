@@ -42,10 +42,7 @@ export default function TagDropdownMenu({ tags }: { tags: { id: string; tagName:
       ))}
       <div className="flex flex-wrap gap-1">
         {chosenTags.map((tag) => (
-          <span
-            key={tag.id}
-            className="bg-secondary px-2 py-0.5 rounded-md text-xs flex items-center gap-1"
-          >
+          <span key={tag.id} className="bg-secondary px-2 py-0.5 rounded-md text-xs flex items-center gap-1">
             {tag.tagName}
             <X size={12} onClick={() => removeTag(tag.id)} />
           </span>
@@ -53,10 +50,7 @@ export default function TagDropdownMenu({ tags }: { tags: { id: string; tagName:
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className="w-full justify-start gap-2 h-auto min-h-10 flex-wrap"
-          >
+          <Button variant="outline" className="w-full justify-start gap-2 h-auto min-h-10 flex-wrap">
             <span className="text-muted-foreground">选择标签 (可多选)</span>
           </Button>
         </DropdownMenuTrigger>
@@ -70,7 +64,7 @@ export default function TagDropdownMenu({ tags }: { tags: { id: string; tagName:
                   e.preventDefault(); // 关键：防止点击后菜单自动关闭
                   toggleTag(tag);
                 }}
-                className="flex justify-between items-center"
+                className="flex justify-between items-center text-red-300"
               >
                 {tag.tagName}
               </DropdownMenuItem>
