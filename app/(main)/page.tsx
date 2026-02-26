@@ -1,3 +1,9 @@
+import ToDo from './_components/ToDo';
+
 export default function Page() {
-  return <div className='max-w-300 mx-auto w-[calc(100vw-40px)]'>主页</div>;
+  return (
+    <div className="max-w-100 m-auto">
+      <ToDo />
+    </div>
+  );
 }
