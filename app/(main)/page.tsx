@@ -1,9 +1,13 @@
-import ToDo from './_components/ToDo';
+import { getTodosWithStatus } from '@/actions/todoActions';
+import { CardDemo } from './_components/ToDo';
+import { serialize } from '@/lib/utils';
 
-export default function Page() {
+export default async function Page() {
+  const todos = await getTodosWithStatus();
+
   return (
     <div className="max-w-100 m-auto">
-      <ToDo />
+      <CardDemo todos={serialize(todos)} />;
     </div>
   );
 }

@@ -1,14 +1,6 @@
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { MoreHorizontalIcon } from 'lucide-react';
+'use client';
 
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardAction,
@@ -19,42 +11,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Link from 'next/link';
+import { ITodo } from '@/models/Todo';
 
-function TableActions() {
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>名称</TableHead>
-          <TableHead className="text-right">操作</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">运动一小时</TableCell>
-          <TableCell className="text-right">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
-                  <MoreHorizontalIcon />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-  );
-}
+import { TableActions } from './TodoTableActions';
 
-export function CardDemo() {
+export function CardDemo({ todos }: { todos: ITodo[] }) {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -67,7 +28,7 @@ export function CardDemo() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <TableActions />
+        <TableActions todos={todos} />
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button variant="outline" className="w-full">
@@ -76,8 +37,4 @@ export function CardDemo() {
       </CardFooter>
     </Card>
   );
-}
-
-export default function ToDo() {
-  return <CardDemo />;
 }
