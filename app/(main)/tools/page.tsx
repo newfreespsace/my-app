@@ -1,8 +1,10 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { useState } from 'react';
 import { runBatchWrite } from './actions'; // 像引入普通函数一样引入
+import Link from 'next/link';
+import { Library } from 'lucide-react';
 
 export default function Tools() {
   const [loading, setLoading] = useState(false);
@@ -21,8 +23,14 @@ export default function Tools() {
   };
 
   return (
-    <Button onClick={handleClick} disabled={loading}>
-      {loading ? '处理中...' : '点击就送'}
-    </Button>
+    <>
+      <Button onClick={handleClick} disabled={loading}>
+        {loading ? '处理中...' : '点击就送'}
+      </Button>
+      <Link href="/problems" className={buttonVariants({ variant: 'ghost' })}>
+        <Library />
+        题库
+      </Link>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import { buttonVariants } from '@/components/ui/button';
-import { Compass, Home, Library } from 'lucide-react';
+import { Compass, Home } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
@@ -18,18 +18,6 @@ export async function SiteHeader() {
               <Home />
               主页
             </Link>
-            <Link href="/problems" className={buttonVariants({ variant: 'ghost' })}>
-              <Library />
-              题库
-            </Link>
-            <Link href="/contest" className={buttonVariants({ variant: 'ghost' })}>
-              <Compass />
-              比赛
-            </Link>
-            <Link href="/tools" className={buttonVariants({ variant: 'ghost' })}>
-              <Compass />
-              工具集
-            </Link>
             <Link href="/articles" className={buttonVariants({ variant: 'ghost' })}>
               <Compass />
               文章
@@ -38,6 +26,9 @@ export async function SiteHeader() {
           <Suspense fallback={<div className="h-12 border-b bg-background" />}>
             <div className="flex gap-4">
               <ModeToggle />
+              <Link href="/tools" className={buttonVariants({ variant: 'ghost' })}>
+                杂物间
+              </Link>
               {session ? (
                 <UserAvatar name={session.user ? (session.user.name as string) : ''} />
               ) : (

@@ -27,7 +27,7 @@ export async function uploadFileAction(formData: FormData) {
   // 将 File 转为 ArrayBuffer 供 Supabase 使用
   const arrayBuffer = await file.arrayBuffer();
 
-  const { data, error } = await supabase.storage.from('my-app').upload(filePath, arrayBuffer, {
+  const { error } = await supabase.storage.from('my-app').upload(filePath, arrayBuffer, {
     contentType: file.type,
     upsert: false,
   });
@@ -83,7 +83,7 @@ const ArticleEditForm = ({
       // 将 File 转为 ArrayBuffer 供 Supabase 使用
       const arrayBuffer = await file.arrayBuffer();
 
-      const { data, error } = await supabase.storage.from('my-app').upload(filePath, arrayBuffer, {
+      const { error } = await supabase.storage.from('my-app').upload(filePath, arrayBuffer, {
         contentType: file.type,
         upsert: false,
       });

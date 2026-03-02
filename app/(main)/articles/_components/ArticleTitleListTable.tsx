@@ -1,8 +1,7 @@
 'use client';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useRouter } from 'next/navigation';
-import { IArticle } from '@/models/Article';
+import Link from 'next/link';
 // 1. 定义单个 Article 的结构
 interface Article {
   id: string;
@@ -16,7 +15,6 @@ interface ArticleListTableProps {
 }
 
 export default function ArticleTItleListTable({ articles }: ArticleListTableProps) {
-  const router = useRouter();
   return (
     <Table>
       <TableHeader>
@@ -27,14 +25,10 @@ export default function ArticleTItleListTable({ articles }: ArticleListTableProp
       </TableHeader>
       <TableBody>
         {articles.map((article) => (
-          <TableRow
-            key={article.id}
-            onClick={() => {
-              router.push(`/articles/${article.id}`);
-            }}
-            className="cursor-pointer"
-          >
-            <TableCell className="text-base">{article.title}</TableCell>
+          <TableRow key={article.id}>
+            <TableCell className="text-base">
+              <Link href={`/articles/${article.id}`}>{article.title}</Link>
+            </TableCell>
             <TableCell className="text-base text-gray-400 text-right">{article.createTime.toLocaleString()}</TableCell>
           </TableRow>
         ))}
