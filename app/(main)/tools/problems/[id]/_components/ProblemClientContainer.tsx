@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import CodeEditor from '@/app/(main)/problems/_components/CodeEditor';
-import CodeOptons from '@/app/(main)/problems/_components/CodeOptions';
+import CodeEditor from '../../_components/CodeEditor';
+import CodeOptons from '../../_components/CodeOptions';
 import { toast } from 'sonner'; // 假设你使用了 toast 提示
 import { submitCode } from '@/actions/problemActions';
 import MarkdownViewer from '@/app/(main)/_components/MarkdownViewer';
-import { DeleteProblemConfirmButton } from '@/app/(main)/problems/_components/DeleteConfirmButton';
+import { DeleteProblemConfirmButton } from '../../_components/DeleteConfirmButton';
 import { Battery } from 'lucide-react';
 import Link from 'next/link';
 import { Iproblem } from '@/models/Problem';
@@ -34,24 +34,15 @@ const StatsView = () => (
 const RightPart = ({ id }: { id: number }) => (
   <div className="flex-col gap-4 flex">
     <div className="p-4 flex flex-col max-w-65">
-      <Link
-        href="#"
-        className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}
-      >
+      <Link href="#" className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
         <Battery />
         提交记录
       </Link>
-      <Link
-        href="#"
-        className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}
-      >
+      <Link href="#" className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
         <Battery />
         统计
       </Link>
-      <Link
-        href="#"
-        className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}
-      >
+      <Link href="#" className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
         <Battery />
         讨论
       </Link>
@@ -64,10 +55,7 @@ const RightPart = ({ id }: { id: number }) => (
       </Link>
     </div>
     <div className="p-4 flex flex-col max-w-65">
-      <Link
-        href="#"
-        className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}
-      >
+      <Link href="#" className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start rounded-none')}>
         <Battery />
         编辑
       </Link>
@@ -171,15 +159,11 @@ export default function ProblemClientContainer({ problem }: Props) {
                     {problem.samples.map((sample, index) => (
                       <div key={sample.input} className="flex gap-4">
                         <div>
-                          <h1 className="text-xl font-bold">
-                            样例输入 {problem.samples.length > 1 && index + 1}
-                          </h1>
+                          <h1 className="text-xl font-bold">样例输入 {problem.samples.length > 1 && index + 1}</h1>
                           <MarkdownViewer content={sample.input} />
                         </div>
                         <div>
-                          <h1 className="text-xl font-bold">
-                            样例输出 {problem.samples.length > 1 && index + 1}
-                          </h1>
+                          <h1 className="text-xl font-bold">样例输出 {problem.samples.length > 1 && index + 1}</h1>
                           <MarkdownViewer content={sample.output} />
                         </div>
                         <Separator />

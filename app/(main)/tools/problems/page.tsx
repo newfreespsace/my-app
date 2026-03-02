@@ -2,10 +2,8 @@ import Problem from '@/models/Problem';
 import dbConnect from '@/lib/db';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
-import ProblemListTable from '@/app/(main)/problems/_components/ProblemListTable';
+import ProblemListTable from './_components/ProblemListTable';
 import PaginationWithTotalPage from '@/components/PaginationWithTotalPage';
-import { auth } from '@/auth';
-import User from '@/models/User';
 
 interface Problem {
   _id: string | number;

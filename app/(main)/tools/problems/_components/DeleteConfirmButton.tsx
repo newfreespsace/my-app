@@ -15,7 +15,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { deleteProblem } from '@/actions/problemActions'; // 引用上面的 Action
-import { Button } from '../../../../components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Battery, Loader2 } from 'lucide-react'; // 引入加载图标
 
 export function DeleteProblemConfirmButton({ id }: { id: number }) {
@@ -36,8 +36,12 @@ export function DeleteProblemConfirmButton({ id }: { id: number }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive' className='justify-start rounded-none w-full gap-2 cursor-pointer' disabled={isPending}>
-          {isPending ? <Loader2 className='animate-spin' /> : <Battery />} 删除题目
+        <Button
+          variant="destructive"
+          className="justify-start rounded-none w-full gap-2 cursor-pointer"
+          disabled={isPending}
+        >
+          {isPending ? <Loader2 className="animate-spin" /> : <Battery />} 删除题目
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -52,7 +56,7 @@ export function DeleteProblemConfirmButton({ id }: { id: number }) {
               // e.preventDefault(); // 防止对话框点击后立即关闭，由业务逻辑决定跳转
               handleDelete();
             }}
-            className='bg-destructive'
+            className="bg-destructive"
           >
             确认删除
           </AlertDialogAction>
