@@ -31,6 +31,10 @@ export default function Tools() {
         <Library />
         题库
       </Link>
+      <Link href="/threejs" className={buttonVariants({ variant: 'ghost' })}>
+        <Library />
+        threejs
+      </Link>
     </>
   );
 }
