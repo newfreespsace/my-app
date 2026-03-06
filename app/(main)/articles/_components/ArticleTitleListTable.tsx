@@ -29,7 +29,17 @@ export default function ArticleTItleListTable({ articles }: ArticleListTableProp
             <TableCell className="text-base">
               <Link href={`/articles/${article.id}`}>{article.title}</Link>
             </TableCell>
-            <TableCell className="text-base text-gray-400 text-right">{article.createTime.toLocaleString()}</TableCell>
+            <TableCell className="text-base text-gray-400 text-right">
+              {article.createTime.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+              })}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
