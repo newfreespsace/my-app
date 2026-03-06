@@ -38,7 +38,6 @@ export default function ArticleTItleListTable({ articles }: ArticleListTableProp
                 minute: '2-digit',
                 second: '2-digit',
                 hour12: false,
-                a: 1,
               })}
             </TableCell>
           </TableRow>
