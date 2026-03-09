@@ -40,7 +40,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 创建时间：{article.createdAt.toLocaleDateString()} {article.createdAt.toLocaleTimeString()}
               </p>
               <p>
-                修改时间：：{article.updatedAt.toLocaleDateString()} {article.updatedAt.toLocaleTimeString()}
+                修改时间：{article.updatedAt.toLocaleDateString()} {article.updatedAt.toLocaleTimeString()}
               </p>
             </div>
           </header>

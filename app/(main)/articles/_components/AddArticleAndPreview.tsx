@@ -1,9 +1,7 @@
-'use client';
-
 import ArticleEditForm from '@/app/(main)/articles/_components/ArticleEditForm';
-import { CardDemo } from '@/app/(main)/articles/add/CardDemo';
-import { useState } from 'react';
+import { CardDemo } from '@/app/(main)/articles/_components/CardDemo';
 import { TagColor } from '@/models/Tag';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface ArticleData {
   title: string;
@@ -12,10 +10,13 @@ export interface ArticleData {
 
 export default function AddArticleAndPreview({
   tags,
+  article,
+  setArticle,
 }: {
   tags: { _id: string; tagName: string; tagColor: TagColor }[];
+  article: ArticleData;
+  setArticle: Dispatch<SetStateAction<ArticleData>>;
 }) {
-  const [article, setArticle] = useState<ArticleData>({ title: '', content: '' });
   return (
     <div className=" w-[calc(100vw-40px)] mx-auto mt-4 flex gap-4">
       <div className="flex-1">

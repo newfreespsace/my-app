@@ -9,7 +9,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import TagDropdownMenu from '../_components/TagDropdownMenu';
 
-import { ArticleData } from '@/app/(main)/articles/add/AddArticleAndPreview';
+import { ArticleData } from '@/app/(main)/articles/_components/AddArticleAndPreview';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import { TagColor } from '@/models/Tag';
 
@@ -19,12 +19,10 @@ export async function uploadFileAction(formData: FormData) {
   const file = formData.get('file') as File;
   if (!file) throw new Error('没有文件');
 
-  // 生成唯一的文件路径（避免重名覆盖）
   const fileExt = file.name.split('.').pop();
   const fileName = `${Math.random()}.${fileExt}`;
   const filePath = `demo/${fileName}`;
 
-  // 将 File 转为 ArrayBuffer 供 Supabase 使用
   const arrayBuffer = await file.arrayBuffer();
 
   const { error } = await supabase.storage.from('my-app').upload(filePath, arrayBuffer, {
@@ -37,7 +35,6 @@ export async function uploadFileAction(formData: FormData) {
     return { success: false };
   }
 
-  // 获取文件的公开访问链接
   const {
     data: { publicUrl },
   } = supabase.storage.from('uploads').getPublicUrl(filePath);

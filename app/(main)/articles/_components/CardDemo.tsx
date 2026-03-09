@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { ArticleData } from '@/app/(main)/articles/add/AddArticleAndPreview';
+import { ArticleData } from '@/app/(main)/articles/_components/AddArticleAndPreview';
 import MarkdownViewer from '@/app/(main)/_components/MarkdownViewer';
 
 export function CardDemo({ article }: { article: ArticleData }) {
