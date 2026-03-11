@@ -1,5 +1,7 @@
+import Footer from '@/components/Footer';
+
 const Page = () => {
-  return <div className="">Page</div>;
+  return <Footer />;
 };
 
 export default Page;
