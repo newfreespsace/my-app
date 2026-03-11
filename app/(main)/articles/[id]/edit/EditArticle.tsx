@@ -10,7 +10,7 @@ export default function EditArticle({
 }: {
   tags: { _id: string; tagName: string; tagColor: TagColor }[];
   existTags: { _id: string; tagName: string; tagColor: TagColor }[];
-  existArticle: { title: string; content: string | null | undefined };
+  existArticle: { id: string; title: string; content: string | null | undefined };
 }) {
   const [article, setArticle] = useState<ArticleData>(existArticle);
   return <AddArticleAndPreview existTags={existTags} tags={tags} article={article} setArticle={setArticle} />;

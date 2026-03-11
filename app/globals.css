@@ -124,3 +124,63 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@layer components {
+  /* 使用更具体的选择器来击败 .prose 的默认样式 */
+  .prose .admonition {
+    @apply my-6 border-l-4 p-4 rounded-r shadow-sm;
+  }
+
+  /* --- Important (橙色) --- */
+  .prose .admonition-important {
+    background-color: oklch(0.96 0.04 40);
+    border-color: oklch(0.6 0.15 40);
+    color: oklch(0.3 0.1 40);
+  }
+
+  /* --- Note (蓝色) --- */
+  .prose .admonition-note {
+    background-color: oklch(0.96 0.04 250);
+    border-color: oklch(0.6 0.15 250);
+    color: oklch(0.3 0.1 250);
+  }
+
+  /* --- Tip (绿色) --- */
+  .prose .admonition-tip {
+    background-color: oklch(0.96 0.04 150); /* 浅绿 */
+    border-color: oklch(0.6 0.15 150);      /* 绿边界 */
+    color: oklch(0.25 0.1 150);             /* 深绿文字 */
+  }
+
+  /* --- Warning (强烈警告 - 琥珀色/橙黄) --- */
+  .prose .admonition-warning {
+    /* 提高色度 (0.12) 和降低亮度 (0.94) 让背景更浓郁 */
+    background-color: oklch(0.94 0.12 70 / 0.15); 
+    /* 强化边框色度 */
+    border-color: oklch(0.65 0.2 70);       
+    /* 文字颜色更深更浓 */
+    color: oklch(0.35 0.15 70);               
+  }
+
+  /* --- 暗色模式适配 --- */
+  .dark .prose .admonition-important { background-color: oklch(0.3 0.1 40 / 0.25); color: oklch(0.9 0.05 40); }
+  .dark .prose .admonition-note { background-color: oklch(0.3 0.1 250 / 0.25); color: oklch(0.9 0.05 250); }
+  .dark .prose .admonition-tip { background-color: oklch(0.3 0.1 150 / 0.25); color: oklch(0.9 0.05 150); }
+/* 强化暗色模式下的警告感 */
+  .dark .prose .admonition-warning { 
+    background-color: oklch(0.35 0.15 70 / 0.25); 
+    border-color: oklch(0.7 0.18 70);
+    color: oklch(0.95 0.1 70); 
+  }
+  /* 解决 p 标签边距问题 */
+  .prose .admonition > p {
+    margin: 0 !important;
+  }
+  
+  .admonition-title {
+    @apply font-bold uppercase mb-1 flex items-center text-sm;
+  }
+}
+
+

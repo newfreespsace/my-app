@@ -4,6 +4,6 @@ import AddArticleAndPreview, { ArticleData } from '../_components/AddArticleAndP
 import { TagColor } from '@/models/Tag';
 
 export default function AddArticle({ tags }: { tags: { _id: string; tagName: string; tagColor: TagColor }[] }) {
-  const [article, setArticle] = useState<ArticleData>({ title: '', content: '' });
+  const [article, setArticle] = useState<ArticleData>({ id: '', title: '', content: '' });
   return <AddArticleAndPreview existTags={[]} tags={tags} article={article} setArticle={setArticle} />;
 }

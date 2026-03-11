@@ -17,7 +17,7 @@ export default async function ArticleEditPage({ params }: { params: Promise<{ id
     <EditArticle
       existTags={serialize(article.tags)}
       tags={serialize(tags)}
-      existArticle={{ title: article.title, content: article.content }}
+      existArticle={{ id: article.id, title: article.title, content: article.content }}
     />
   );
 }

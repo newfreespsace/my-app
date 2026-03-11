@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { createArticle } from '@/actions/articleActions';
+import { createArticle, updateArticle } from '@/actions/articleActions';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import TagDropdownMenu from '../_components/TagDropdownMenu';
 import { ArticleData } from '@/app/(main)/articles/_components/AddArticleAndPreview';
@@ -51,14 +51,11 @@ const ArticleEditForm = ({
   article: ArticleData;
   setArticle: Dispatch<SetStateAction<ArticleData>>;
 }) => {
-  // 用于触发隐藏的文件输入框
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 通用的处理函数
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    // 使用函数式更新，确保逻辑正确
     setArticle((prev) => ({
       ...prev,
       [name]: value,
@@ -70,7 +67,6 @@ const ArticleEditForm = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 模拟上传过程 (你需要替换为真实的 API 请求)
     try {
       // 生成唯一的文件路径（避免重名覆盖）
       const fileExt = file.name.split('.').pop();
@@ -112,12 +108,15 @@ const ArticleEditForm = ({
       console.error('上传失败:', error);
     }
   };
+  const isEditMode = !!article.id;
+  const formAction = isEditMode ? updateArticle : createArticle;
 
   return (
     <Card className="">
       <CardContent>
-        <form id="form-rhf-demo" action={createArticle}>
+        <form id="form-rhf-demo" action={formAction}>
           <FieldGroup>
+            {isEditMode && article.id && <input type="hidden" name="id" value={article.id} />}
             <Field>
               <FieldLabel htmlFor="title">标题</FieldLabel>
               <Input

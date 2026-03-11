@@ -30,16 +30,15 @@ export async function createArticle(formData: FormData) {
   redirect(`/articles`); // 跳回列表页
 }
 
-export async function editArticle(formData: FormData) {
+export async function updateArticle(formData: FormData) {
   await dbConnect();
   const id = formData.get('id') as string;
   const rawFormData = {
+    id,
     title: formData.get('title') as string,
     content: formData.get('content') as string,
     tags: formData.getAll('tagids') as string[],
   };
-  // a
-  // await Article.create(rawFormData);
 
   await Article.findByIdAndUpdate(id, rawFormData);
   revalidatePath('/articles');

@@ -4,6 +4,7 @@ import { TagColor } from '@/models/Tag';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface ArticleData {
+  id: string | null | undefined;
   title: string;
   content: string | null | undefined;
 }
