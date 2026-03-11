@@ -10,7 +10,14 @@ export default async function ArticleEditPage({ params }: { params: Promise<{ id
 
   await dbConnect();
   const article = await Article.findById(id).populate('tags');
+  const tags = await Tag.find();
+  if (!article) throw Error('Some Thing Wrong! Please Try Again!');
+
   return (
-    <EditArticle tags={serialize(article.tags)} existArticle={{ title: article.title, content: article.content }} />
+    <EditArticle
+      existTags={serialize(article.tags)}
+      tags={serialize(tags)}
+      existArticle={{ title: article.title, content: article.content }}
+    />
   );
 }

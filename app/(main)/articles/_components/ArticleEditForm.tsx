@@ -6,9 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { createArticle } from '@/actions/articleActions';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-
 import TagDropdownMenu from '../_components/TagDropdownMenu';
-
 import { ArticleData } from '@/app/(main)/articles/_components/AddArticleAndPreview';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import { TagColor } from '@/models/Tag';
@@ -43,11 +41,13 @@ export async function uploadFileAction(formData: FormData) {
 }
 
 const ArticleEditForm = ({
+  existTags,
   tags,
   article,
   setArticle,
 }: {
   tags: { _id: string; tagName: string; tagColor: TagColor }[];
+  existTags: { _id: string; tagName: string; tagColor: TagColor }[];
   article: ArticleData;
   setArticle: Dispatch<SetStateAction<ArticleData>>;
 }) => {
@@ -137,7 +137,7 @@ const ArticleEditForm = ({
                 placeholder="在此处输入正文"
                 className="h-40"
                 required
-                value={article.content}
+                value={article.content || ''}
                 onChange={handleChange}
               />
             </Field>
@@ -151,7 +151,7 @@ const ArticleEditForm = ({
             </Field>
             <Field className="">
               <FieldLabel htmlFor="tagname">标签</FieldLabel>
-              <TagDropdownMenu tags={tags} />
+              <TagDropdownMenu existTags={existTags} tags={tags} />
             </Field>
           </FieldGroup>
         </form>

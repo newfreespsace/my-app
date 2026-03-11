@@ -14,9 +14,15 @@ import { COLOR_MAP, TEXT_COLOR_MAP } from '@/constants/colors';
 import { cn } from '@/lib/utils';
 import { TagColor } from '@/models/Tag';
 
-export default function TagDropdownMenu({ tags }: { tags: { _id: string; tagName: string; tagColor: TagColor }[] }) {
+export default function TagDropdownMenu({
+  existTags,
+  tags,
+}: {
+  tags: { _id: string; tagName: string; tagColor: TagColor }[];
+  existTags: { _id: string; tagName: string; tagColor: TagColor }[];
+}) {
   // 1. 状态改为数组
-  const [chosenTags, setChosenTags] = useState<{ _id: string; tagName: string; tagColor: TagColor }[]>([]);
+  const [chosenTags, setChosenTags] = useState<{ _id: string; tagName: string; tagColor: TagColor }[]>(existTags);
 
   const toggleTag = (tag: { _id: string; tagName: string; tagColor: TagColor }) => {
     setChosenTags(
@@ -26,14 +32,11 @@ export default function TagDropdownMenu({ tags }: { tags: { _id: string; tagName
           : [...prev, tag] // 不存在则添加
     );
   };
-
   const removeTag = (id: string) => {
     setChosenTags((prev) => prev.filter((t) => t._id !== id));
   };
 
-  // 1. 先从选中的标签中提取出所有的 ID
   const chosenIds = new Set(chosenTags.map((t) => t._id));
-  // 2. 过滤掉那些 ID 已经在 set 中的标签
   const availableTags = tags.filter((tag) => !chosenIds.has(tag._id));
 
   return (

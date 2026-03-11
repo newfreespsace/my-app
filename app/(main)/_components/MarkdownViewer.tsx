@@ -8,7 +8,7 @@ import rehypeSanitize from 'rehype-sanitize';
 
 import 'katex/dist/katex.min.css';
 
-export default function MarkdownViewer({ content }: { content: string }) {
+export default function MarkdownViewer({ content }: { content: string | null | undefined }) {
   return (
     <article
       className="prose dark:prose-invert max-w-none /* 调整段落垂直间距 */
