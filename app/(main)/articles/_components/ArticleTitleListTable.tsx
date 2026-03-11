@@ -27,7 +27,9 @@ export default function ArticleTItleListTable({ articles }: ArticleListTableProp
         {articles.map((article) => (
           <TableRow key={article.id}>
             <TableCell className="text-base">
-              <Link href={`/articles/${article.id}`}>{article.title}</Link>
+              <Link href={`/articles/${article.id}`} prefetch={false}>
+                {article.title}
+              </Link>
             </TableCell>
             <TableCell className="text-base text-gray-400 text-right">
               {article.createTime.toLocaleString('zh-CN', {

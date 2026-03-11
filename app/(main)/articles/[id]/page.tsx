@@ -8,10 +8,12 @@ import { ITag } from '@/models/Tag';
 import { buttonVariants } from '@/components/ui/button';
 import DeleteArticleButton from '@/app/(main)/_components/DeleteArticleButton';
 import Link from 'next/link';
+import delay from '@/lib/delay';
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   await dbConnect();
+  // await delay(3000);
   const article = (await Article.findById(id).populate('tags').lean()) as
     | (Omit<IArticle, 'tags'> & { tags: ITag[] })
     | null;
