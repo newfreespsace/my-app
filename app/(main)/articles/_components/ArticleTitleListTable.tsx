@@ -31,7 +31,7 @@ export default function ArticleTItleListTable({ articles }: ArticleListTableProp
                 {article.title}
               </Link>
             </TableCell>
-            <TableCell className="text-base text-gray-400 text-right">
+            <TableCell className="text-base text-gray-400 text-right tabular-nums">
               {article.createTime.toLocaleString('zh-CN', {
                 year: 'numeric',
                 month: '2-digit',
