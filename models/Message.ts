@@ -1,8 +1,11 @@
 import mongoose, { Model, InferSchemaType } from 'mongoose';
 
-const MessageSchema = new mongoose.Schema({
-  message: String,
-});
+const MessageSchema = new mongoose.Schema(
+  {
+    message: String,
+  },
+  { timestamps: true }
+);
 
 export type IMessage = InferSchemaType<typeof MessageSchema> & { _id: mongoose.Types.ObjectId };
 

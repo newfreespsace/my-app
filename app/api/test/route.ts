@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   });
   await dbConnect();
   await Message.create({
-    message: time,
+    message: `收到 cron-job 发来的请求，时间 ${time}`,
   });
   time = new Date().toLocaleString('zh-CN', {
     timeZone: 'Asia/Shanghai',
