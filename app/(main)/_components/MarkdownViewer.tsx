@@ -8,6 +8,9 @@ import rehypeSlug from 'rehype-slug';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { Info, Lightbulb, TriangleAlert, AlertCircle } from 'lucide-react';
+import rehypeHighlight from 'rehype-highlight';
+// 你还需要引入一个 CSS 主题，否则依然没有颜色
+import 'highlight.js/styles/github-dark.css'; // 或者你喜欢的其他主题
 
 import 'katex/dist/katex.min.css';
 
@@ -41,6 +44,7 @@ export default function MarkdownViewer({ content }: { content: string | null | u
         remarkPlugins={[remarkGfm, remarkMath, remarkDirective, remarkAdmonitions]}
         rehypePlugins={[
           rehypeRaw,
+          [rehypeHighlight, { detect: true, ignoreMissing: true }], // 添加这一行
           [
             rehypeSanitize,
             {
@@ -71,10 +75,10 @@ export default function MarkdownViewer({ content }: { content: string | null | u
                   ?.replace('admonition-', '') || '';
 
               const labels: Record<string, string> = {
-                important: '重要',
-                note: '笔记',
-                tip: '提示',
-                warning: '警告',
+                important: 'important',
+                note: 'note',
+                tip: 'tip',
+                warning: 'warning',
               };
 
               return (
