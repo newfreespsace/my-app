@@ -3,7 +3,7 @@ export default function Footer() {
 
   return (
     <p>
-      最近更新于:{' '}
+      最近构建于:{' '}
       {new Date(deployTime!).toLocaleString('zh-CN', {
         timeZone: 'Asia/Shanghai',
       })}
