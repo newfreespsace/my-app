@@ -181,6 +181,20 @@
   .admonition-title {
     @apply font-bold uppercase mb-1 flex items-center text-sm;
   }
+
+  /* 针对 prose 内部的行内代码进行修饰 */
+  .prose :not(pre) > code {
+    @apply bg-muted text-muted-foreground px-1.5 py-0.5 rounded-md font-mono text-[0.9em] border border-border;
+    /* 取消 prose 默认添加的前后反引号 */
+    &::before { content: "" !important; }
+    &::after { content: "" !important; }
+  }
+
+  /* 确保在 admonition 内部的代码也能看清 */
+  .prose .admonition :not(pre) > code {
+    background-color: rgba(0, 0, 0, 0.05);
+    @apply dark:bg-white/10;
+  }
 }
 
 

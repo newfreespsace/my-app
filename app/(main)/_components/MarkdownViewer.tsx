@@ -51,6 +51,7 @@ export default function MarkdownViewer({ content }: { content: string | null | u
                 // v4 的 CSS 可能需要具体的 className 字符串通过过滤。
                 div: [...(defaultSchema.attributes?.div || []), 'className'],
                 span: [...(defaultSchema.attributes?.span || []), 'className'],
+                code: [...(defaultSchema.attributes?.code || []), 'className'],
               },
             },
           ],
