@@ -16,7 +16,7 @@ export function TableOfContents({ headings }: { headings: any[] }) {
           setActiveId(visibleEntry.target.id);
         }
       },
-      { rootMargin: '-10% 0% -70% 0%' }, // 调整触发高亮的位置
+      { rootMargin: '-10% 0% -70% 0%' } // 调整触发高亮的位置
     );
 
     headings.forEach((h) => {
@@ -28,14 +28,14 @@ export function TableOfContents({ headings }: { headings: any[] }) {
   }, [headings]);
 
   return (
-    <ul className='space-y-3'>
+    <ul className="space-y-3">
       {headings.map((h) => (
         <li key={h.id} style={{ paddingLeft: `${(h.level - 2) * 1}rem` }}>
           <a
             href={`#${h.id}`}
             className={cn(
               'text-sm transition-colors block',
-              activeId === h.id ? 'text-blue-600 font-medium' : 'text-slate-500 hover:text-slate-900',
+              activeId === h.id ? 'text-blue-600 font-medium' : 'text-slate-500 hover:text-slate-900'
             )}
           >
             {h.title}

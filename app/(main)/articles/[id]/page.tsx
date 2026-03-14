@@ -39,10 +39,16 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </h1>
             <div className="flex justify-start gap-2 text-gray-500 italic">
               <p>
-                创建时间：{article.createdAt.toLocaleDateString()} {article.createdAt.toLocaleTimeString()}
+                创建时间：
+                {article.createdAt.toLocaleString('zh-CN', {
+                  timeZone: 'Asia/Shanghai',
+                })}
               </p>
               <p>
-                修改时间：{article.updatedAt.toLocaleDateString()} {article.updatedAt.toLocaleTimeString()}
+                修改时间：
+                {article.updatedAt.toLocaleString('zh-CN', {
+                  timeZone: 'Asia/Shanghai',
+                })}
               </p>
             </div>
           </header>

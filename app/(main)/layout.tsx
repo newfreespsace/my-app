@@ -18,7 +18,7 @@ export default function RootLayout({
       >
         <SidebarInset>
           <SiteHeader />
-          <div className="p-4">{children}</div>
+          <div className="p-4 min-h-[calc(100vh-var(--header-height))]">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </div>
