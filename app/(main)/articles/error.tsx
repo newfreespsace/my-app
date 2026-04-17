@@ -8,7 +8,7 @@ export default function ProblemsError({
   error: Error;
   reset: () => void;
 }) {
-  return (
+  return ( 
     <div className='p-10 text-center border-2 border-dashed border-red-200 rounded-xl'>
       <h2 className='text-2xl font-bold text-red-600'>标签模块出错了</h2>
       <p className='text-gray-500 mt-2'>
